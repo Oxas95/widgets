@@ -50,7 +50,11 @@ void ManagerGUI::delWidgetID(int ID, bool freeMemWidget){
 
 void ManagerGUI::useWidgets(){
 	eventNdraw();
-	
+	ManagerList* ml = widgetList;
+	while(ml){
+		ml->widget->eventNdraw(lastClicPosition);
+		ml = ml->next;
+	}
 }
 
 int ManagerGUI::getSizeList(){
