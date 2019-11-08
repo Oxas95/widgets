@@ -1,12 +1,12 @@
 #include "managerGUI.hpp"
 
-ManagerGUI::ManagerGUI() {
+ManagerGUI::ManagerGUI(Fenetre& _f) : f(_f) {
 	widgetList = NULL;
 	sizeList = 0;
 }
 
 ManagerGUI::~ManagerGUI() {
-	delWidget(false);
+	while(widgetList) delWidget();
 }
 
 //ajoute en début de liste un widget
@@ -19,33 +19,31 @@ void ManagerGUI::addWidget(Widget* w) {
 }
 
 //supprime le widget au début de la liste, la mémoire alloué au widget peut être libéré si voulu
-void ManagerGUI::delWidget(bool freeMemWidget) {
+void ManagerGUI::delWidget() {
 	if(widgetList){
 		ManagerList* del = widgetList;
 		widgetList = widgetList->next;
-		if(freeMemWidget) delete del->widget;
 		delete del;
 		sizeList--;
 	}
 }
 
-ManagerList* delWidgetID(ManagerList* ml, int ID, freeMemWidget){
+ManagerList* delWidgetIDInList(ManagerList* ml, int ID){
 	if(!ml) return NULL;
-	else if(ml->widget->getID() = ID){
+	else if(ml->widget->getID() == ID){
 		ManagerList* del = ml;
 		ml = ml->next;
-		if(freeMemWidget) delete del->widget;
 		delete del;
 		return ml;
 	}
 	else {
-		ml->next = delWidgetID(ml->next, ID, freeMemWidget);
+		ml->next = delWidgetIDInList(ml->next, ID);
 		return ml;
 	}
 }
 
-void ManagerGUI::delWidgetID(int ID, bool freeMemWidget){
-	widgetList = delWidgetID(widgetList, ID, freeMemWidget);
+void ManagerGUI::delWidgetID(int ID){
+	widgetList = delWidgetIDInList(widgetList, ID);
 }
 
 void ManagerGUI::useWidgets(){
@@ -69,9 +67,11 @@ Widget* ManagerGUI::getWidget(int i){
 }
 
 Widget* ManagerGUI::getWidgetWithID(int ID){
-	if(i < 0 || i >= sizeList) return NULL;
 	ManagerList* ml = widgetList;
-	for(int j = 0; j < i; j++) ml = ml->next;
+	for(int j = 0; j < sizeList; j++) {
+		if(ml->widget->getID() != ID) ml = ml->next;
+		else j = sizeList;
+	}
 	return ml->widget;
 }
 
@@ -85,10 +85,10 @@ bool otherIsMaster(ManagerList* ml){
 }
 
 void ManagerGUI::eventNdraw(){
-	if(!otherIsMaster()) masterID = -1;
-	if(masterID = ID){
+	if(!otherIsMaster(widgetList)) masterID = -1;
+	if(masterID == -1){
 		sf::Event event;
-		while (f.getWindow()->pollEvent(event)){
+		while (f.getWindow().pollEvent(event)){
 			if (event.type == sf::Event::Closed){
 				f.close();
 			}
@@ -104,7 +104,7 @@ void ManagerGUI::eventNdraw(){
 			
 			else if (event.type == sf::Event::MouseButtonPressed){
 				if (event.mouseButton.button == sf::Mouse::Left){
-					lastClicPosition = sf::Mouse::getPosition(*(f.getWindow()));
+					lastClicPosition = sf::Mouse::getPosition(f.getWindow());
 				}
 				eventKey = sf::Keyboard::Unknown;
 			}

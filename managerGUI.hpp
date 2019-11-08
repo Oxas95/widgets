@@ -1,6 +1,9 @@
 #ifndef managerGUI_hpp
 #define managerGUI_hpp
 
+#include "fenetre.hpp"
+#include "widget.hpp"
+
 namespace listManager {
 
 	typedef struct ManagerListWidget{
@@ -14,11 +17,11 @@ class ManagerGUI {
 	private :
 		int sizeList;
 		int masterID;
-		
+		ManagerList* widgetList;
+		Fenetre& f;
 		void eventNdraw();
 	
 	public :
-		ManagerList* widgetList;
 		sf::Vector2i lastClicPosition;
 		sf::Keyboard::Key eventKey;
 		bool isPressedKey;
@@ -27,8 +30,8 @@ class ManagerGUI {
 		~ManagerGUI();
 		
 		void addWidget(Widget* w);
-		void delWidget(bool freeMemWidget);
-		void delWidgetID(int ID, bool freeMemWidget);
+		void delWidget();
+		void delWidgetID(int ID);
 		void useWidgets();
 		int getSizeList();
 		Widget* getWidget(int i);

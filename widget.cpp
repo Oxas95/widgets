@@ -5,8 +5,8 @@
 
 int Widget::nextID = 0;
 
-Widget::Widget(Fenetre& _f) : f(_f), position(-1,-1) {
-	ID = nextID++;
+Widget::Widget(Fenetre& _f) : ID(nextID), f(_f), position(-1,-1), textPosition(0,0) {
+	nextID++;
 	notUsed = defaultColorNotUsed;
 	isUsed = defaultColorIsUsed;
 	sprite = NULL;
@@ -21,12 +21,14 @@ Widget::~Widget() {
 	
 }
 
-void Widget::setText(const char* str) {
-	texte = str;
+void Widget::setText(const char* str, int sizeText, sf::Color textColor) {
+	text = str;
+	this->sizeText = sizeText;
+	this->textColor = textColor;
 }
 
 const char* Widget::getText() {
-	return texte.c_str();
+	return text.c_str();
 }
 
 void Widget::loadImage(const char* path) {

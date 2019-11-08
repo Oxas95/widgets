@@ -2,7 +2,6 @@
 #define Fenetre_hpp
 
 #include <SFML/Graphics.hpp>
-#include <string>
 
 class Fenetre{
 	private:
@@ -10,19 +9,20 @@ class Fenetre{
 		sf::ContextSettings settings;
 		int largeur;
 		int hauteur;
-		static sf::Font font;
-		static bool fontLoaded;
-		std::string titre;
+		short zoom_cases;
 		
 	public:
-		Fenetre(int x, int y, const char* titre);
-		void resize(int x, int y);
+		Fenetre();
+		void resize(const short zoom);
 		~Fenetre();
 		void close();
 		bool isOpen();
 		sf::RenderWindow& getWindow();
 		sf::Color getPixelColor(int x, int y);
 		bool write(const char* str, int police, sf::Color, int x, int y);
+		void writeCases(const char* str,int x, int y);
+		void writeCases(const char* str,sf::Vector2i);
+		void writeCases(const char* str,sf::Vector2f);
 		float getFont(const char* text, int police);
 		void drawRect(int x, int y, int largeur, int hauteur, sf::Color);
 		void draw_fillRect(int x, int y, int largeur, int hauteur, sf::Color);
@@ -35,6 +35,9 @@ class Fenetre{
 		void drawSprite(int x, int y, sf::Sprite& sprite);
 		void drawSprite(sf::Vector2i posSprite, sf::Sprite& sprite);
 		void drawSprite(sf::Vector2f posSprite, sf::Sprite& sprite);
+		void drawSpriteCases(int x, int y, sf::Sprite& sprite);
+		void drawSpriteCases(sf::Vector2i posSprite, sf::Sprite& sprite);
+		void drawSpriteCases(sf::Vector2f posSprite, sf::Sprite& sprite);
 		bool drawSprite(int x, int y, const char* file);
 		void draw_line(sf::Vector2i p1, sf::Vector2i p2, sf::Color color);
 		void draw_line(sf::Vector2f p1, sf::Vector2f p2, sf::Color color);
@@ -42,6 +45,7 @@ class Fenetre{
 		sf::Keyboard::Key getKey(bool& pressed);
 		int getLargeur();
 		int getHauteur();
+		short getZoom();
 };
 
 #endif //Fenetre_hpp

@@ -2,9 +2,9 @@ ISFML = -I/usr/local/include
 LSFML = -lsfml-graphics -lsfml-window -lsfml-system -L/usr/local/lib
 RSFML = export LD_LIBRARY_PATH=/usr/local/lib &&
 
-ficCpp = main.cpp	fenetre.cpp		widget.cpp	button.cpp
-ficH   = 			fenetre.hpp 	widget.hpp	button.hpp
-ficO   = main.o		fenetre.o		widget.o	button.o
+ficCpp = main.cpp	fenetre.cpp		widget.cpp	button.cpp	managerGUI.cpp	
+ficH   = 			fenetre.hpp 	widget.hpp	button.hpp	managerGUI.hpp	
+ficO   = main.o		fenetre.o		widget.o	button.o	managerGUI.o	
 
 default: reset main
 
@@ -34,6 +34,9 @@ fenetre.o: fenetre.cpp fenetre.hpp
 
 main.o: main.cpp fenetre.hpp
 	g++ -c -g -Wall main.cpp fenetre.hpp $(ISFML)
+
+managerGUI.o: managerGUI.cpp managerGUI.hpp fenetre.hpp widget.hpp
+	g++ -c -g -Wall managerGUI.cpp managerGUI.hpp fenetre.hpp widget.hpp $(ISFML)
 
 widget.o: widget.cpp widget.hpp fenetre.hpp
 	g++ -c -g -Wall widget.cpp widget.hpp fenetre.hpp $(ISFML)

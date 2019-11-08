@@ -5,10 +5,8 @@
 
 using namespace std;
 
-sf::Font Fenetre::font;
-bool Fenetre::fontLoaded = false;
-
-Fenetre::Fenetre(int x, int y, const char* titre){
+Fenetre::Fenetre(){
+	zoom_cases = 2;
 
 	settings.depthBits = 0;
 	settings.stencilBits = 0;
@@ -18,35 +16,48 @@ Fenetre::Fenetre(int x, int y, const char* titre){
 	
 	window = NULL;
 	
-	this->titre = titre;
-	
-	resize(x,y);
+	resize(zoom_cases);
 }
 
-void Fenetre::resize(int x, int y){
-	if(window) window->close();
-	this->largeur = x;
-	this->hauteur = y;
-	window = new sf::RenderWindow(sf::VideoMode(largeur, hauteur), titre.c_str(), sf::Style::Titlebar | sf::Style::Close, settings);
+void Fenetre::resize(const short zoom){
+	close();
+	delete window;
+	static bool fullscreen = false;
+	if((zoom > 0 && zoom < 5) || fullscreen){
+		if(!fullscreen) zoom_cases = zoom;
+		printf("zoom : %d\n",zoom_cases);
+		this->largeur = 8 * zoom_cases * 16*2;
+		this->hauteur = 8 * zoom_cases * 14*2;
+		window = new sf::RenderWindow(sf::VideoMode(largeur, hauteur), "Super Mario Bros NES", sf::Style::Titlebar | sf::Style::Close, settings);
+		fullscreen = false;
+	}
+	else if(zoom == -1){
+		printf("Fullscreen mode video\n");
+		window = new sf::RenderWindow(sf::VideoMode(largeur, hauteur), "Super Mario Bros NES", sf::Style::Fullscreen, settings);
+		fullscreen = true;
+	}
 }
 
 Fenetre::~Fenetre(){
 	close();
+	delete window;
 }
 
 void Fenetre::close(){
-	window->close();
-	delete window;
-	window = NULL;
+	if(window) window->close();
 }
 
 bool Fenetre::isOpen(){
+	if(window == NULL) return false;
 	return window->isOpen();
 }
 
 sf::RenderWindow& Fenetre::getWindow(){
 	return *window;
 }
+
+sf::Font font;
+bool fontLoaded = false;
 
 float Fenetre::getFont(const char* str, int police){
 	if(fontLoaded == false){
@@ -98,6 +109,27 @@ bool Fenetre::write(const char* str, int police, sf::Color color, int x, int y){
 	window->draw(text);
 	
 	return true;
+}
+
+void Fenetre::writeCases(const char* str,int x, int y){
+	writeCases(str,sf::Vector2f(x,y));
+}
+
+void Fenetre::writeCases(const char* str,sf::Vector2i pos){
+	writeCases(str,pos.x,pos.y);
+}
+
+void Fenetre::writeCases(const char* str,sf::Vector2f pos){
+	int size_str = strlen(str);
+	int i;
+	for (i = 0; i < size_str; i++){
+		if(str[i] == '$'){
+			//drawSpriteCases(pos,textures::nombrePieces);
+		}
+		else 
+			//drawSpriteCases(pos,textures::lettres[textures::getSpriteChar(str[i])]);
+		pos.x++;
+	}
 }
 
 void Fenetre::drawRect(int x, int y, int largeur, int hauteur, sf::Color color){
@@ -155,6 +187,22 @@ void Fenetre::drawSprite(sf::Vector2i posSprite, sf::Sprite& sprite){
 
 void Fenetre::drawSprite(sf::Vector2f posSprite, sf::Sprite& sprite){
 	sprite.setPosition(posSprite);
+	window->draw(sprite);
+}
+
+void Fenetre::drawSpriteCases(int x, int y, sf::Sprite& sprite){
+	drawSpriteCases(sf::Vector2f(x,y), sprite);
+}
+
+void Fenetre::drawSpriteCases(sf::Vector2i posSprite, sf::Sprite& sprite){
+	drawSpriteCases(sf::Vector2f(posSprite.x,posSprite.y), sprite);
+}
+
+void Fenetre::drawSpriteCases(sf::Vector2f posSprite, sf::Sprite& sprite){
+	//posSprite.x *= sizeof(cases) * zoom_cases;
+	//posSprite.y *= sizeof(cases) * zoom_cases;
+	sprite.setPosition(posSprite);
+	sprite.setScale(zoom_cases, zoom_cases);
 	window->draw(sprite);
 }
 
@@ -237,7 +285,6 @@ sf::Vector2i Fenetre::wait_clic(){
 				encore = false;
 			}
 		}
-		window->display();
 	}
 	printf("Clic GAUCHE en %4d %4d               \n",mousePos.x, mousePos.y); fflush(stdout);
 	return mousePos;
@@ -247,7 +294,7 @@ sf::Keyboard::Key Fenetre::getKey(bool& pressed){
 	sf::Event event;
 	while (window->pollEvent(event)){
 		if (event.type == sf::Event::Closed){
-			window->close();
+			close();
 		}
 		if(event.type == sf::Event::KeyPressed){
 			pressed = true;
@@ -268,4 +315,8 @@ int Fenetre::getLargeur(){
 
 int Fenetre::getHauteur(){
 	return hauteur;
+}
+
+short Fenetre::getZoom(){
+	return zoom_cases;
 }
