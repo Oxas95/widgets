@@ -14,20 +14,19 @@ class Button : public Widget{
 		Fenetre& f;
 		widgetType type;
 		bool master;
-		sf::Texture texture;
-		std::string text;
+		std::string text[2];
 		
 	public :
 		sf::Vector2i position;
-		sf::Color notUsed;
-		sf::Color isUsed;
-		sf::Color borderColor;
-		sf::Sprite* sprite; //is set to public to customize the sprite, but can be loaded with loadImage(const char*)
+		sf::Color background[2];
+		sf::Color borderColor[2];
+		sf::Sprite* sprite[2]; //is set to public to customize the sprite, but can be loaded with loadImage(const char*)
+		sf::Texture texture[2];
 		
-		
-		int sizeText;
-		sf::Color textColor;
-		sf::Vector2i textPosition;
+		int sizeText[2];
+		sf::Color textColor[2];
+		sf::Vector2i textPosition[2];
+		//array-var of size 2 : { when not used, when used }
 	###*/
 	
 	private :

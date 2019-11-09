@@ -10,14 +10,13 @@ Button::Button(Fenetre& f) : Widget(f), rectangle(sf::Vector2f(0,0)) {
 }
 
 Button::~Button() {
-	if(sprite) delete sprite;
+	
 }
 
 void Button::eventNdraw(sf::Vector2i& posClic){
 	
 	rectangle.setSize(sf::Vector2f(sizeButton.x * 1.f, sizeButton.y * 1.f));
 	rectangle.setPosition(sf::Vector2f(position.x, position.y));
-	rectangle.setOutlineColor(borderColor);
 	
 	if(stay_activated == false) activated = false;
 	
@@ -29,12 +28,15 @@ void Button::eventNdraw(sf::Vector2i& posClic){
 	}
 	else if(posClic.x != -10 && posClic.y != -10) pushed = false;
 	
-	if(activated) rectangle.setFillColor(isUsed);
-	else 		  rectangle.setFillColor(notUsed);
+	Byte usage = ((activated)? un : zero);
+	rectangle.setFillColor(background[usage]);
+	rectangle.setOutlineColor(borderColor[usage]);
+	rectangle.setOutlineThickness(borderSize[usage]);
+	
 	
 	f.draw(rectangle);
-	if(sprite) f.draw(*sprite);
-	//ajouter l'ecriture du texte
+	if(sprite[usage]) f.draw(*sprite[usage]);
+	if(sizeText[usage] > 0) f.write(text[usage].c_str(), sizeText[usage], textColor[usage], textPosition[usage].x, textPosition[usage].y);
 }
 
 bool Button::isActivated(){

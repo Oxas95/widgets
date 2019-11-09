@@ -5,40 +5,47 @@
 
 int Widget::nextID = 0;
 
-Widget::Widget(Fenetre& _f) : ID(nextID), f(_f), position(-1,-1), textPosition(0,0) {
+Widget::Widget(Fenetre& _f) : ID(nextID), f(_f), position(-1,-1) {
 	nextID++;
-	notUsed = defaultColorNotUsed;
-	isUsed = defaultColorIsUsed;
-	sprite = NULL;
-	borderColor = sf::Color::Black;
-	text = "";
-	sizeText = 0;
-	textColor = sf::Color::Black;
+	for (int i = 0; i < 2; i++){
+		sprite[i] = NULL;
+		borderColor[i] = sf::Color::Black;
+		text[i] = "";
+		sizeText[i] = 0;
+		textColor[i] = sf::Color::Black;
+		textPosition[i] = position;
+		borderSize[i] = 1;
+	}
+	background[0] = defaultColorNotUsed;
+	background[1] = defaultColorIsUsed;
 	master = false;
 }
 
 Widget::~Widget() {
-	
+	if(sprite[0]) delete sprite[0];
+	if(sprite[1]) delete sprite[1];
+	printf("sprites button deleted\n");
 }
 
-void Widget::setText(const char* str, int sizeText, sf::Color textColor) {
-	text = str;
-	this->sizeText = sizeText;
-	this->textColor = textColor;
+void Widget::setText(Byte usage, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition) {
+	text[usage] = str;
+	this->sizeText[usage] = sizeText;
+	this->textColor[usage] = textColor;
+	this->textPosition[usage] = textPosition;
 }
 
-const char* Widget::getText() {
-	return text.c_str();
+const char* Widget::getText(Byte usage) {
+	return text[usage].c_str();
 }
 
-void Widget::loadImage(const char* path) {
+void Widget::loadImage(Byte usage, const char* path) {
 	if(!path)
-		if(sprite) delete sprite, sprite = NULL;
+		if(sprite[usage]) delete sprite[usage], sprite[usage] = NULL;
 	
-	if(texture.loadFromFile(path)) {
-		if(sprite) delete sprite;
-		sprite = new sf::Sprite();
-		sprite->setTexture(texture);
+	if(texture[usage].loadFromFile(path)) {
+		if(sprite[usage]) delete sprite[usage];
+		sprite[usage] = new sf::Sprite();
+		sprite[usage]->setTexture(texture[usage]);
 	}
 }
 

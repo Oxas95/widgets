@@ -10,6 +10,14 @@ typedef enum{
 	button
 } widgetType;
 
+typedef enum{
+	zero = 0,
+	un = 1
+} Byte;
+
+#define whenNotUsed 0
+#define whenUsed 1
+
 class Widget{
 	private :
 		static int nextID;
@@ -19,27 +27,26 @@ class Widget{
 		Fenetre& f;
 		widgetType type;
 		bool master;
-		sf::Texture texture;
-		std::string text;
+		std::string text[2];
 		
 	public :
 		sf::Vector2i position;
-		sf::Color notUsed;
-		sf::Color isUsed;
-		sf::Color borderColor;
-		sf::Sprite* sprite; //is set to public to customize the sprite, but can be loaded with loadImage(const char*)
+		sf::Color background[2];
+		sf::Color borderColor[2];
+		sf::Sprite* sprite[2]; //is set to public to customize the sprite, but can be loaded with loadImage(const char*)
+		sf::Texture texture[2];
 		
-		
-		int sizeText;
-		sf::Color textColor;
-		sf::Vector2i textPosition;
-		
+		int borderSize[2];
+		int sizeText[2];
+		sf::Color textColor[2];
+		sf::Vector2i textPosition[2];
+		//array-var of size 2 : { when not used, when used }
 	
 		Widget(Fenetre&);
 		virtual ~Widget();
-		void setText(const char* str, int sizeText, sf::Color textColor);
-		const char* getText();
-		void loadImage(const char* path); //set path to NULL to remove image
+		void setText(Byte usage, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition);
+		const char* getText(Byte usage);
+		void loadImage(Byte usage, const char* path); //set path to NULL to remove image
 		widgetType getWidgetType();
 		int getID();
 		bool isMaster();

@@ -36,6 +36,7 @@ void Fenetre::resize(const short zoom){
 		window = new sf::RenderWindow(sf::VideoMode(largeur, hauteur), "Super Mario Bros NES", sf::Style::Fullscreen, settings);
 		fullscreen = true;
 	}
+	printf("Ouverture d'une fenetre de taille %d,%d\n",this->largeur,this->hauteur);
 }
 
 Fenetre::~Fenetre(){
