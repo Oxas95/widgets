@@ -18,7 +18,7 @@ class ManagerGUI {
 		int sizeList;
 		int masterID;
 		ManagerList* widgetList;
-		Fenetre& f;
+		sf::RenderWindow& f;
 		void eventNdraw();
 	
 	public :
@@ -26,7 +26,7 @@ class ManagerGUI {
 		sf::Keyboard::Key eventKey;
 		bool isPressedKey;
 		
-		ManagerGUI(Fenetre&);
+		ManagerGUI(sf::RenderWindow&);
 		~ManagerGUI();
 		
 		void addWidget(Widget* w);

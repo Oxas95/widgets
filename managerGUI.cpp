@@ -1,6 +1,6 @@
 #include "managerGUI.hpp"
 
-ManagerGUI::ManagerGUI(Fenetre& _f) : f(_f) {
+ManagerGUI::ManagerGUI(sf::RenderWindow& _f) : f(_f) {
 	widgetList = NULL;
 	sizeList = 0;
 }
@@ -78,7 +78,7 @@ Widget* ManagerGUI::getWidgetWithID(int ID){
 //indique si un widget de la liste est maître
 bool otherIsMaster(ManagerList* ml){
 	if(ml){
-		if(ml->widget->isMaster() && ml->widget->getWidgetType() != button) return true;
+		if(ml->widget->isMaster()) return true;
 		else return otherIsMaster(ml->next);
 	}
 	else return false;
@@ -88,7 +88,7 @@ void ManagerGUI::eventNdraw(){
 	if(!otherIsMaster(widgetList)) masterID = -1;
 	if(masterID == -1){
 		sf::Event event;
-		while (f.getWindow().pollEvent(event)){
+		while (f.pollEvent(event)){
 			if (event.type == sf::Event::Closed){
 				f.close();
 			}
@@ -104,7 +104,7 @@ void ManagerGUI::eventNdraw(){
 			
 			else if (event.type == sf::Event::MouseButtonPressed){
 				if (event.mouseButton.button == sf::Mouse::Left){
-					lastClicPosition = sf::Mouse::getPosition(f.getWindow());
+					lastClicPosition = sf::Mouse::getPosition(f);
 				}
 				eventKey = sf::Keyboard::Unknown;
 			}

@@ -62,7 +62,7 @@ bool fontLoaded = false;
 
 float Fenetre::getFont(const char* str, int police){
 	if(fontLoaded == false){
-		if (!font.loadFromFile("dynasty.ttf"))
+		if (!font.loadFromFile("ttf/F25_Bank_Printer.ttf"))
 			return 0.f;
 		fontLoaded = true;
 	}
@@ -91,7 +91,7 @@ sf::Color Fenetre::getPixelColor(int x, int y){
 
 bool Fenetre::write(const char* str, int police, sf::Color color, int x, int y){
 	if(fontLoaded == false){
-		if (!font.loadFromFile("dynasty.ttf"))
+		if (!font.loadFromFile("ttf/F25_Bank_Printer.ttf"))
 			return false;
 		fontLoaded = true;
 	}
