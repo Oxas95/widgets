@@ -4,15 +4,17 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
-#include "Byte/Byte.hpp"
 
 typedef enum{
 	box,
 	dynamic
 } widgetType;
 
-#define whenNotUsed zero
-#define whenUsed un
+typedef enum{
+	Off = 0,
+	Hover = 2,
+	On = 1
+} widgetStatus;
 
 class Widget{
 	private :
@@ -26,12 +28,14 @@ class Widget{
 		
 	public :
 		sf::Vector2i position[2];
-		sf::Color background[2];
-		sf::Color borderColor[2];
+		sf::Color background[3];
+		sf::Color borderColor[3];
 		
 		int borderSize[2];
-		//array-var of size 2 : { when not used, when used }
-	
+		//array-var of size 2 : { status of widget }
+		
+		bool changeIfHover;
+		
 		Widget(sf::RenderWindow&);
 		virtual ~Widget();
 		int getID();

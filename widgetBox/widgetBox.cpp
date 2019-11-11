@@ -1,46 +1,46 @@
 #include "widgetBox.hpp"
 
 WidgetBox::WidgetBox(sf::RenderWindow& f) : Widget(f) {
-	sprite[whenNotUsed] = NULL;
-	sprite[whenUsed] = NULL;
-	setText(zero, "", 0, sf::Color::Black, position[0], "ttf/F25_Bank_Printer.ttf");
-	setText(un, "", 0, sf::Color::Black, position[1], "ttf/F25_Bank_Printer.ttf");
+	sprite[Off] = NULL;
+	sprite[On] = NULL;
+	setText(Off, "", 0, sf::Color::Black, position[Off], "ttf/F25_Bank_Printer.ttf");
+	setText(On, "", 0, sf::Color::Black, position[On], "ttf/F25_Bank_Printer.ttf");
 	type = box;
 }
 
 WidgetBox::~WidgetBox() {
-	if(sprite[whenNotUsed]) delete sprite[whenNotUsed];
-	if(sprite[whenUsed]) delete sprite[whenUsed];
+	if(sprite[Off]) delete sprite[Off];
+	if(sprite[On]) delete sprite[On];
 	printf("widgetBox deleted\n");
 }
 
-void WidgetBox::setText(Byte usage, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition, const char* ttfPath){
+void WidgetBox::setText(widgetStatus usage, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition, const char* ttfPath){
 	setText(usage, str, sizeText, textColor, textPosition);
 	setText(usage,ttfPath);
 }
 
-void WidgetBox::setText(Byte usage, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition) {
+void WidgetBox::setText(widgetStatus usage, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition) {
 	setText(usage, str, sizeText, textColor);
 	text[usage].setPosition(textPosition.x, textPosition.y);
 }
 
-void WidgetBox::setText(Byte usage, const char* str, int sizeText, sf::Color textColor) {
+void WidgetBox::setText(widgetStatus usage, const char* str, int sizeText, sf::Color textColor) {
 	text[usage].setString(str);
 	text[usage].setCharacterSize(sizeText);
 	text[usage].setFillColor(textColor);
 }
 
-void WidgetBox::setText(Byte usage, const char* ttfPath){
+void WidgetBox::setText(widgetStatus usage, const char* ttfPath){
 	if (font[usage].loadFromFile(ttfPath)) text[usage].setFont(font[usage]);
 }
 
-int WidgetBox::getWidthText(Byte usage){
+int WidgetBox::getWidthText(widgetStatus usage){
 	sf::FloatRect fr = text[usage].getLocalBounds();
 	float largeurTexte = fr.width;
 	return (int) largeurTexte;
 }
 
-int WidgetBox::getHeightText(Byte usage){
+int WidgetBox::getHeightText(widgetStatus usage){
 	int characterSize = text[usage].getCharacterSize();
 	std::string String = text[usage].getString().toAnsiString();
 	bool bold = (text[usage].getStyle() & sf::Text::Bold);
@@ -55,7 +55,7 @@ int WidgetBox::getHeightText(Byte usage){
 	return MaxHeight;
 }
 
-void WidgetBox::loadImage(Byte usage, const char* path) {
+void WidgetBox::loadImage(widgetStatus usage, const char* path) {
 	if(!path)
 		if(sprite[usage]) delete sprite[usage], sprite[usage] = NULL;
 	

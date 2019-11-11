@@ -2,61 +2,58 @@
 
 ButtonRect::ButtonRect(sf::RenderWindow& f) : WidgetBox(f), rectangle(sf::Vector2f(0,0)) {
 	boxType = buttonRect;
-	sizeButton[whenNotUsed].x = sizeButton[whenNotUsed].y = 0;
-	sizeButton[whenUsed].x = sizeButton[whenUsed].y = 0;
+	sizeButton[Off].x = sizeButton[Off].y = 0;
+	sizeButton[On].x = sizeButton[On].y = 0;
 	stay_activated = true;
 	activated = false;
 	pushed = false;
-	includeBorderInEvent = false;
 }
 
 ButtonRect::~ButtonRect() {
 	printf("button deleted\n");
 }
 
-void ButtonRect::moveTextTop(Byte usage){
+void ButtonRect::moveTextTop(widgetStatus usage){
 	int y = getHeightText(usage);
 	int decalageY = text[usage].getCharacterSize() - y;
 	
-	text[ByteToInt(usage)].setPosition(text[ByteToInt(usage)].getPosition().x , (position[usage].y - decalageY));
+	text[usage].setPosition(text[usage].getPosition().x , (position[usage].y - decalageY));
 }
 
-void ButtonRect::moveTextBottom(Byte usage){
+void ButtonRect::moveTextBottom(widgetStatus usage){
 	int y = getHeightText(usage);
 	int decalageY = text[usage].getCharacterSize() - y;
 	
-	text[ByteToInt(usage)].setPosition(text[ByteToInt(usage)].getPosition().x , (position[usage].y - decalageY) + (sizeButton[usage].y - y));
+	text[usage].setPosition(text[usage].getPosition().x , (position[usage].y - decalageY) + (sizeButton[usage].y - y));
 }
 
-void ButtonRect::moveTextLeft(Byte usage){
+void ButtonRect::moveTextLeft(widgetStatus usage){
 	int x = getWidthText(usage);
-	text[ByteToInt(usage)].setPosition(position[usage].x + (sizeButton[usage].x - x) / 2 , text[ByteToInt(usage)].getPosition().y);
+	text[usage].setPosition(position[usage].x + (sizeButton[usage].x - x) / 2 , text[usage].getPosition().y);
 }
 
-void ButtonRect::moveTextRight(Byte usage){
+void ButtonRect::moveTextRight(widgetStatus usage){
 	int x = getWidthText(usage);
-	text[ByteToInt(usage)].setPosition(position[usage].x + (sizeButton[usage].x - x), text[ByteToInt(usage)].getPosition().y);
+	text[usage].setPosition(position[usage].x + (sizeButton[usage].x - x), text[usage].getPosition().y);
 }
 
-void ButtonRect::moveTextInCenter(Byte usage, bool on_X, bool on_Y){
+void ButtonRect::moveTextInCenter(widgetStatus usage, bool on_X, bool on_Y){
 	int x = getWidthText(usage);
 	int y = getHeightText(usage);
 	int decalageY = text[usage].getCharacterSize() - y;
 	
 	if(on_X) x = position[usage].x + (sizeButton[usage].x - x) / 2;
-	else x = text[ByteToInt(usage)].getPosition().x;
+	else x = text[usage].getPosition().x;
 	
 	if(on_Y) y = (position[usage].y - decalageY) + (sizeButton[usage].y - y) / 2;
-	else y = text[ByteToInt(usage)].getPosition().y;
+	else y = text[usage].getPosition().y;
 	
-	text[ByteToInt(usage)].setPosition(x,y);
+	text[usage].setPosition(x,y);
 }
 
 void ButtonRect::eventNdraw(sf::Vector2i& posClic){
 	if(stay_activated == false) activated = false;
-	Byte usage = ((activated)? un : zero);
-	if(includeBorderInEvent) sizeButton[usage].x += borderSize[usage], sizeButton[usage].y += borderSize[usage];
-	
+	widgetStatus usage = ((activated)? On : Off);
 	
 	if(posClic.x >= position[usage].x && posClic.x <= position[usage].x + sizeButton[usage].x 
 	&& posClic.y >= position[usage].y && posClic.y <= position[usage].y + sizeButton[usage].y){
@@ -66,21 +63,26 @@ void ButtonRect::eventNdraw(sf::Vector2i& posClic){
 	}
 	else if(posClic.x != -10 && posClic.y != -10) pushed = false;
 	
-	if(includeBorderInEvent) sizeButton[usage].x -= borderSize[usage], sizeButton[usage].y -= borderSize[usage];
-	usage = ((activated)? un : zero);
-	if(includeBorderInEvent) sizeButton[usage].x += borderSize[usage], sizeButton[usage].y += borderSize[usage];
+	usage = ((activated)? On : Off);
 	
+	sf::Vector2i mousePos = sf::Mouse::getPosition(f);
+	
+	widgetStatus hover = usage;
+	if(changeIfHover){
+		if(mousePos.x >= position[usage].x && mousePos.x <= position[usage].x + sizeButton[usage].x 
+		&& mousePos.y >= position[usage].y && mousePos.y <= position[usage].y + sizeButton[usage].y){
+			hover = Hover;
+		}
+	}
 	rectangle.setSize(sf::Vector2f(sizeButton[usage].x * 1.f, sizeButton[usage].y * 1.f));
 	rectangle.setPosition(sf::Vector2f(position[usage].x, position[usage].y));
-	rectangle.setFillColor(background[usage]);
-	rectangle.setOutlineColor(borderColor[usage]);
+	rectangle.setFillColor(background[hover]);
+	rectangle.setOutlineColor(borderColor[hover]);
 	rectangle.setOutlineThickness(borderSize[usage]);
 	
 	f.draw(rectangle);
 	if(sprite[usage]) f.draw(*sprite[usage]);
 	if(text[usage].getCharacterSize() > 0) f.draw(text[usage]);
-	
-	if(includeBorderInEvent) sizeButton[usage].x -= borderSize[usage], sizeButton[usage].y -= borderSize[usage];
 }
 
 bool ButtonRect::isActivated(){

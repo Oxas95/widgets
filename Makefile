@@ -2,9 +2,9 @@ ISFML = -I/usr/local/include
 LSFML = -lsfml-graphics -lsfml-window -lsfml-system -L/usr/local/lib
 RSFML = export LD_LIBRARY_PATH=/usr/local/lib &&
 
-ficCpp = main.cpp	fenetre.cpp		widget.cpp	widgetBox/buttonRect.cpp	managerGUI.cpp	widgetBox/widgetBox.cpp	
-ficH   = 			fenetre.hpp 	widget.hpp	widgetBox/buttonRect.hpp	managerGUI.hpp	widgetBox/widgetBox.hpp	
-ficO   = main.o		fenetre.o		widget.o	buttonRect.o				managerGUI.o	widgetBox.o				
+ficCpp = main.cpp	fenetre.cpp		widget.cpp	widgetBox/buttonRect.cpp	managerGUI.cpp	widgetBox/widgetBox.cpp	widgetBox/buttonCircle.cpp	
+ficH   = 			fenetre.hpp 	widget.hpp	widgetBox/buttonRect.hpp	managerGUI.hpp	widgetBox/widgetBox.hpp	widgetBox/buttonCircle.hpp	
+ficO   = main.o		fenetre.o		widget.o	buttonRect.o				managerGUI.o	widgetBox.o				buttonCircle.o				
 
 default: reset main
 
@@ -23,10 +23,13 @@ clear:
 	clear
 
 main: $(ficO)
-	g++ -g -Wall $(ficO) $(LSFML) Byte/Byte.a -o main
+	g++ -g -Wall $(ficO) $(LSFML) -o main
 	rm -f *.gch
 
-buttonRect.o: widgetBox/buttonRect.cpp widgetBox/buttonRect.hpp widget.hpp widgetBox/widgetBox.hpp Byte/Byte.hpp
+buttonCircle.o: widgetBox/buttonCircle.cpp widgetBox/buttonCircle.hpp widget.hpp widgetBox/widgetBox.hpp
+	g++ -c -g -Wall widgetBox/buttonCircle.cpp widgetBox/buttonCircle.hpp widget.hpp widgetBox/widgetBox.hpp $(ISFML)
+
+buttonRect.o: widgetBox/buttonRect.cpp widgetBox/buttonRect.hpp widget.hpp widgetBox/widgetBox.hpp
 	g++ -c -g -Wall widgetBox/buttonRect.cpp widgetBox/buttonRect.hpp widget.hpp widgetBox/widgetBox.hpp $(ISFML)
 
 fenetre.o: fenetre.cpp fenetre.hpp
@@ -38,7 +41,7 @@ main.o: main.cpp fenetre.hpp
 managerGUI.o: managerGUI.cpp managerGUI.hpp widget.hpp
 	g++ -c -g -Wall managerGUI.cpp managerGUI.hpp widget.hpp $(ISFML)
 
-widget.o: widget.cpp widget.hpp Byte/Byte.hpp
+widget.o: widget.cpp widget.hpp
 	g++ -c -g -Wall widget.cpp widget.hpp $(ISFML)
 
 widgetBox.o: widgetBox/widgetBox.cpp widgetBox/widgetBox.hpp widget.hpp

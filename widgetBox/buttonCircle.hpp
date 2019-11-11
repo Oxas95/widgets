@@ -15,16 +15,15 @@ class ButtonCircle : public WidgetBox{
 	public :
 		int sizeButton[2];
 		bool stay_activated;
-		bool includeBorderInEvent;
 		
 	public :
 		ButtonCircle(sf::RenderWindow&);
 		~ButtonCircle();
-		void moveTextTop(Byte usage);
-		void moveTextBottom(Byte usage);
-		void moveTextLeft(Byte usage);
-		void moveTextRight(Byte usage);
-		void moveTextInCenter(Byte usage, bool on_X, bool on_Y);
+		void moveTextTop(widgetStatus usage);
+		void moveTextBottom(widgetStatus usage);
+		void moveTextLeft(widgetStatus usage);
+		void moveTextRight(widgetStatus usage);
+		void moveTextInCenter(widgetStatus usage, bool on_X, bool on_Y);
 		void eventNdraw(sf::Vector2i& posClic);
 		bool isActivated();
 		bool isPushed();
