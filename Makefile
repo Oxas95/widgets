@@ -48,7 +48,7 @@ widgetBox.o: widgetBox/widgetBox.cpp widgetBox/widgetBox.hpp widget.hpp
 	g++ -c -g -Wall widgetBox/widgetBox.cpp widgetBox/widgetBox.hpp widget.hpp $(ISFML)
 
 clean:
-	rm -fR *.o main *.gch
+	rm -fv *.gch widgetBox/*.gch dynamicWidget/*.gch *.o main 
 
 install:
 	chmod +x libs/install.sh
