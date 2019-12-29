@@ -33,6 +33,7 @@ class Widget{
 		int borderSize[2];
 		
 		bool changeIfHover;
+		bool includeBorderInEvent;
 		
 		Widget(sf::RenderWindow&);
 		virtual ~Widget();

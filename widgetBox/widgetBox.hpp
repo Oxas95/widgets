@@ -27,6 +27,7 @@ class WidgetBox : public Widget{
 	
 		WidgetBox(sf::RenderWindow&);
 		virtual ~WidgetBox();
+		//if sizeText = 0 the text will not be displayed
 		void setText(widgetStatus, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition, const char* ttfPath);
 		void setText(widgetStatus, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition);
 		void setText(widgetStatus, const char* str, int sizeText, sf::Color textColor);

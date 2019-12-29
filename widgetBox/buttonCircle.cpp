@@ -59,12 +59,15 @@ void ButtonCircle::eventNdraw(sf::Vector2i& posClic){
 	centre.x += sizeButton[usage];
 	centre.y += sizeButton[usage];
 	
-	if((centre.x - posClic.x) * (centre.x - posClic.x) + (centre.y - posClic.y) * (centre.y - posClic.y) <= sizeButton[usage] * sizeButton[usage]){
+	int size = sizeButton[usage];
+	if(includeBorderInEvent) size += borderSize[usage];
+	
+	if((centre.x - posClic.x) * (centre.x - posClic.x) + (centre.y - posClic.y) * (centre.y - posClic.y) <= size * size){
 		activated = !activated;
 		pushed = true;
-		posClic.x = posClic.y = -10;
+		posClic.x = posClic.y = -getID();
 	}
-	else if(posClic.x != -10 && posClic.y != -10) pushed = false;
+	else if(posClic.x != -getID() && posClic.y != -getID()) pushed = false;
 	
 	usage = ((activated)? On : Off);
 	
@@ -74,9 +77,12 @@ void ButtonCircle::eventNdraw(sf::Vector2i& posClic){
 	
 	sf::Vector2i mousePos = sf::Mouse::getPosition(f);
 	
+	size = sizeButton[usage];
+	if(includeBorderInEvent) size += borderSize[usage];
+	
 	bool hover = false;
 	if(changeIfHover){
-		if((centre.x - mousePos.x) * (centre.x - mousePos.x) + (centre.y - mousePos.y) * (centre.y - mousePos.y) <= sizeButton[usage] * sizeButton[usage]){
+		if((centre.x - mousePos.x) * (centre.x - mousePos.x) + (centre.y - mousePos.y) * (centre.y - mousePos.y) <= size * size){
 			hover = true;
 		}
 	}

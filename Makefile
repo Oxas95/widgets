@@ -2,9 +2,9 @@ ISFML = -I/usr/local/include
 LSFML = -lsfml-graphics -lsfml-window -lsfml-system -L/usr/local/lib
 RSFML = export LD_LIBRARY_PATH=/usr/local/lib &&
 
-ficCpp = main.cpp	fenetre.cpp		widget.cpp	widgetBox/buttonRect.cpp	managerGUI.cpp	widgetBox/widgetBox.cpp	widgetBox/buttonCircle.cpp	
-ficH   = 			fenetre.hpp 	widget.hpp	widgetBox/buttonRect.hpp	managerGUI.hpp	widgetBox/widgetBox.hpp	widgetBox/buttonCircle.hpp	
-ficO   = main.o		fenetre.o		widget.o	buttonRect.o				managerGUI.o	widgetBox.o				buttonCircle.o				
+ficCpp = main.cpp	fenetre.cpp		widget.cpp	widgetBox/buttonRect.cpp	managerGUI.cpp	widgetBox/widgetBox.cpp	widgetBox/buttonCircle.cpp	widgetBox/textArea.cpp	
+ficH   = 			fenetre.hpp 	widget.hpp	widgetBox/buttonRect.hpp	managerGUI.hpp	widgetBox/widgetBox.hpp	widgetBox/buttonCircle.hpp	widgetBox/textArea.hpp	
+ficO   = main.o		fenetre.o		widget.o	buttonRect.o				managerGUI.o	widgetBox.o				buttonCircle.o				textArea.o				
 
 default: reset main
 
@@ -40,6 +40,9 @@ main.o: main.cpp fenetre.hpp
 
 managerGUI.o: managerGUI.cpp managerGUI.hpp widget.hpp
 	g++ -c -g -Wall managerGUI.cpp managerGUI.hpp widget.hpp $(ISFML)
+
+textArea.o: widgetBox/textArea.cpp widgetBox/textArea.hpp widgetBox/widgetBox.hpp widget.hpp
+	g++ -c -g -Wall widgetBox/textArea.cpp widgetBox/textArea.hpp widgetBox/widgetBox.hpp widget.hpp $(ISFML)
 
 widget.o: widget.cpp widget.hpp
 	g++ -c -g -Wall widget.cpp widget.hpp $(ISFML)

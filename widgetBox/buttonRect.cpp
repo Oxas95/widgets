@@ -55,22 +55,35 @@ void ButtonRect::eventNdraw(sf::Vector2i& posClic){
 	if(stay_activated == false) activated = false;
 	widgetStatus usage = ((activated)? On : Off);
 	
-	if(posClic.x >= position[usage].x && posClic.x <= position[usage].x + sizeButton[usage].x 
-	&& posClic.y >= position[usage].y && posClic.y <= position[usage].y + sizeButton[usage].y){
+	int size[2] = {sizeButton[usage].x,sizeButton[usage].y};
+	if(includeBorderInEvent){
+		size[0] += borderSize[usage];
+		size[1] += borderSize[usage];
+	}
+	
+	if(posClic.x >= position[usage].x && posClic.x <= position[usage].x + size[0] 
+	&& posClic.y >= position[usage].y && posClic.y <= position[usage].y + size[1]){
 		activated = !activated;
 		pushed = true;
-		posClic.x = posClic.y = -10;
+		posClic.x = posClic.y = -getID();
 	}
-	else if(posClic.x != -10 && posClic.y != -10) pushed = false;
+	else if(posClic.x != -getID() && posClic.y != -getID()) pushed = false;
 	
 	usage = ((activated)? On : Off);
 	
 	sf::Vector2i mousePos = sf::Mouse::getPosition(f);
 	
+	size[0] = sizeButton[usage].x;
+	size[1] = sizeButton[usage].y;
+	if(includeBorderInEvent){
+		size[0] += borderSize[usage];
+		size[1] += borderSize[usage];
+	}
+	
 	bool hover = false;
 	if(changeIfHover){
-		if(mousePos.x >= position[usage].x && mousePos.x <= position[usage].x + sizeButton[usage].x 
-		&& mousePos.y >= position[usage].y && mousePos.y <= position[usage].y + sizeButton[usage].y){
+		if(mousePos.x >= position[usage].x && mousePos.x <= position[usage].x + size[0] 
+		&& mousePos.y >= position[usage].y && mousePos.y <= position[usage].y + size[1]){
 			hover = true;
 		}
 	}

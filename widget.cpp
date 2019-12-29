@@ -13,6 +13,7 @@ Widget::Widget(sf::RenderWindow& _f) : ID(nextID), f(_f) {
 	background[On] = sf::Color(180,180,180);
 	master = false;
 	changeIfHover = false;
+	includeBorderInEvent = true;
 }
 
 Widget::~Widget() {
