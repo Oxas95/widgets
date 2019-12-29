@@ -74,15 +74,25 @@ void ButtonCircle::eventNdraw(sf::Vector2i& posClic){
 	
 	sf::Vector2i mousePos = sf::Mouse::getPosition(f);
 	
-	widgetStatus hover = usage;
+	bool hover = false;
 	if(changeIfHover){
 		if((centre.x - mousePos.x) * (centre.x - mousePos.x) + (centre.y - mousePos.y) * (centre.y - mousePos.y) <= sizeButton[usage] * sizeButton[usage]){
-			hover = Hover;
+			hover = true;
 		}
 	}
 	
-	circle.setFillColor(background[hover]);
-	circle.setOutlineColor(borderColor[hover]);
+	sf::Color backgroundHoverColor = background[usage], borderHoverColor = borderColor[usage];
+	if(hover){
+		if(backgroundHoverColor.r + 20 < 256) backgroundHoverColor.r += 20; else backgroundHoverColor.r = 255;
+		if(backgroundHoverColor.g + 20 < 256) backgroundHoverColor.g += 20; else backgroundHoverColor.g = 255;
+		if(backgroundHoverColor.b + 20 < 256) backgroundHoverColor.b += 20; else backgroundHoverColor.b = 255;
+		if(borderHoverColor.r + 20 < 256) borderHoverColor.r += 20; else borderHoverColor.r = 255;
+		if(borderHoverColor.g + 20 < 256) borderHoverColor.g += 20; else borderHoverColor.g = 255;
+		if(borderHoverColor.b + 20 < 256) borderHoverColor.b += 20; else borderHoverColor.b = 255;
+	}
+	
+	circle.setFillColor(backgroundHoverColor);
+	circle.setOutlineColor(borderHoverColor);
 	circle.setOutlineThickness(borderSize[usage]);
 	circle.setRadius(sizeButton[usage]);
 	circle.setPosition(sf::Vector2f(position[usage].x, position[usage].y));

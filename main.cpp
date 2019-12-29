@@ -18,8 +18,8 @@ int main(){
 	b.sizeButton[Off].x = 100;	b.sizeButton[Off].y = 100;
 	b.sizeButton[On].x = 80;	b.sizeButton[On].y = 80;
 	b.borderSize[Off] = b.borderSize[On] = 10;
-	b.background[Off] = sf::Color::White;
-	b.background[On] = sf::Color::White;
+	b.background[Off] = sf::Color(0,50,0);
+	b.background[On] = sf::Color(0,150,0);
 	b.setText(Off,"X",50,sf::Color::Black);
 	b.setText(On,"V",40,sf::Color::Black);
 	b.moveTextInCenter(Off,true,true);

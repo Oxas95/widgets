@@ -9,7 +9,8 @@
 typedef enum{
 	undefined,
 	buttonRect,
-	buttonCircle
+	buttonCircle,
+	textArea
 } widgetBoxType;
 
 class WidgetBox : public Widget{
@@ -26,13 +27,13 @@ class WidgetBox : public Widget{
 	
 		WidgetBox(sf::RenderWindow&);
 		virtual ~WidgetBox();
-		void setText(widgetStatus usage, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition, const char* ttfPath);
-		void setText(widgetStatus usage, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition);
-		void setText(widgetStatus usage, const char* str, int sizeText, sf::Color textColor);
-		void setText(widgetStatus usage, const char* ttfPath);
-		int getWidthText(widgetStatus usage);
-		int getHeightText(widgetStatus usage);
-		void loadImage(widgetStatus usage, const char* path); //set path to NULL to remove image
+		void setText(widgetStatus, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition, const char* ttfPath);
+		void setText(widgetStatus, const char* str, int sizeText, sf::Color textColor, sf::Vector2i textPosition);
+		void setText(widgetStatus, const char* str, int sizeText, sf::Color textColor);
+		void setText(widgetStatus, const char* ttfPath);
+		int getWidthText(widgetStatus);
+		int getHeightText(widgetStatus);
+		void loadImage(widgetStatus, const char* path); //set path to NULL to remove image
 		
 		virtual void eventNdraw(sf::Vector2i& posClic) = 0;
 		widgetType getWidgetType();

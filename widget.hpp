@@ -12,7 +12,6 @@ typedef enum{
 
 typedef enum{
 	Off = 0,
-	Hover = 2,
 	On = 1
 } widgetStatus;
 
@@ -28,11 +27,10 @@ class Widget{
 		
 	public :
 		sf::Vector2i position[2];
-		sf::Color background[3];
-		sf::Color borderColor[3];
+		sf::Color background[2];
+		sf::Color borderColor[2];
 		
 		int borderSize[2];
-		//array-var of size 2 : { status of widget }
 		
 		bool changeIfHover;
 		
