@@ -11,6 +11,43 @@ TextArea::~TextArea(){
 	
 }
 
+void TextArea::moveTextTop(){
+	int y = getHeightText(Off);
+	int decalageY = text[Off].getCharacterSize() - y;
+	
+	text[Off].setPosition(text[Off].getPosition().x , position[Off].y - decalageY + 1);
+}
+
+void TextArea::moveTextBottom(){
+	int y = getHeightText(Off);
+	int decalageY = text[Off].getCharacterSize() - y;
+	
+	text[Off].setPosition(text[Off].getPosition().x , position[Off].y - decalageY + size.y + borderSize[Off] - y + 1);
+}
+
+void TextArea::moveTextLeft(){
+	text[Off].setPosition(position[Off].x, text[Off].getPosition().y);
+}
+
+void TextArea::moveTextRight(){
+	int x = getWidthText(Off);
+	text[Off].setPosition(position[Off].x + size.x + borderSize[Off] - x - 1, text[Off].getPosition().y);
+}
+
+void TextArea::moveTextInCenter(bool on_X, bool on_Y){
+	int x = getWidthText(Off);
+	int y = getHeightText(Off);
+	int decalageY = text[Off].getCharacterSize() - y;
+	
+	if(on_X) x = position[Off].x + (size.x + borderSize[Off] + 1 - x) / 2;
+	else x = text[Off].getPosition().x;
+	
+	if(on_Y) y = (position[Off].y - decalageY) + (size.y + borderSize[Off] + 1 - y) / 2;
+	else y = text[Off].getPosition().y ;
+	
+	text[Off].setPosition(x, y);
+}
+
 void TextArea::drawText(){
 	if(text[Off].getCharacterSize() > 0) {
 		
@@ -42,7 +79,7 @@ void TextArea::drawText(){
 
 void TextArea::eventNdraw(sf::Vector2i& posClic){
 	rectangle.setSize(sf::Vector2f(size.x * 1.f, size.y * 1.f));
-	rectangle.setPosition(sf::Vector2f(position[Off].x, position[Off].y));
+	rectangle.setPosition(sf::Vector2f(position[Off].x + borderSize[Off], position[Off].y + borderSize[Off]));
 	rectangle.setFillColor(background[Off]);
 	rectangle.setOutlineColor(borderColor[Off]);
 	rectangle.setOutlineThickness(borderSize[Off]);

@@ -1,24 +1,11 @@
 #ifndef managerGUI_hpp
 #define managerGUI_hpp
 
-#include "fenetre.hpp"
-#include "widget.hpp"
+#include "listWidget.hpp"
 
-namespace listManager {
-
-	typedef struct ManagerListWidget{
-		Widget* widget;
-		ManagerListWidget* next;
-	} ManagerList;
-
-} using namespace listManager;
-
-class ManagerGUI {
-	private :
-		int sizeList;
+class ManagerGUI : public ListWidget {
+	protected :
 		int masterID;
-		ManagerList* widgetList;
-		sf::RenderWindow& f;
 		void eventNdraw();
 	
 	public :
@@ -29,13 +16,8 @@ class ManagerGUI {
 		ManagerGUI(sf::RenderWindow&);
 		~ManagerGUI();
 		
-		void addWidget(Widget* w);
-		void delWidget();
-		void delWidgetID(int ID);
-		void useWidgets();
-		int getSizeList();
-		Widget* getWidget(int i);
-		Widget* getWidgetWithID(int ID);
+		virtual void useWidgets();
+		int getMasterID();
 };
 
 #endif //managerGUI_hpp

@@ -1,4 +1,21 @@
 #include "widgetBox.hpp"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+const char* parseString(widgetBoxType w){
+	string s;
+	switch(w){
+		case buttonRect 	: 	s = "buttonRect"; 		break;
+		case buttonCircle 	: 	s = "buttonCircle";		break;
+		case textArea 		: 	s = "textArea";			break;
+		case radioButton 	: 	s = "radioButton";		break;
+		case radioBox 		: 	s = "radioBox";			break;
+		default 			: 	s = "undefined";		break;
+	}
+	return s.c_str();
+}
 
 WidgetBox::WidgetBox(sf::RenderWindow& f) : Widget(f) {
 	sprite[Off] = NULL;
@@ -6,6 +23,15 @@ WidgetBox::WidgetBox(sf::RenderWindow& f) : Widget(f) {
 	setText(Off, "", 0, sf::Color::Black, position[Off], "ttf/F25_Bank_Printer.ttf");
 	setText(On, "", 0, sf::Color::Black, position[On], "ttf/F25_Bank_Printer.ttf");
 	type = box;
+	for (int i = 0; i < 2; i++){
+		borderColor[i] = sf::Color::Black;
+		borderSize[i] = 1;
+		position[i].x = position[i].y = -1;
+	}
+	background[Off] = sf::Color(120,120,120);
+	background[On] = sf::Color(180,180,180);
+	changeIfHover = false;
+	includeBorderInEvent = true;
 }
 
 WidgetBox::~WidgetBox() {
@@ -64,6 +90,23 @@ void WidgetBox::loadImage(widgetStatus usage, const char* path) {
 		sprite[usage] = new sf::Sprite();
 		sprite[usage]->setTexture(texture[usage]);
 	}
+}
+
+sf::Vector2i WidgetBox::getPosition(widgetStatus w){
+	return position[w];
+}
+
+void WidgetBox::setPosition(widgetStatus w, int x, int y){
+	position[w].x = x;
+	position[w].y = y;
+}
+
+int WidgetBox::getBorderSize(widgetStatus w){
+	return borderSize[w];
+}
+
+void WidgetBox::setBorderSize(widgetStatus w, int i){
+	borderSize[w] = i;
 }
 
 widgetType WidgetBox::getWidgetType() {

@@ -2,9 +2,11 @@ ISFML = -I/usr/local/include
 LSFML = -lsfml-graphics -lsfml-window -lsfml-system -L/usr/local/lib
 RSFML = export LD_LIBRARY_PATH=/usr/local/lib &&
 
-ficCpp = main.cpp	fenetre.cpp		widget.cpp	widgetBox/buttonRect.cpp	managerGUI.cpp	widgetBox/widgetBox.cpp	widgetBox/buttonCircle.cpp	widgetBox/textArea.cpp	
-ficH   = 			fenetre.hpp 	widget.hpp	widgetBox/buttonRect.hpp	managerGUI.hpp	widgetBox/widgetBox.hpp	widgetBox/buttonCircle.hpp	widgetBox/textArea.hpp	
-ficO   = main.o		fenetre.o		widget.o	buttonRect.o				managerGUI.o	widgetBox.o				buttonCircle.o				textArea.o				
+ficCpp = main.cpp	fenetre.cpp		widget.cpp	widgetBox/buttonRect.cpp	managerGUI.cpp	widgetBox/widgetBox.cpp	widgetBox/buttonCircle.cpp	$(ficCpp2)
+ficH   = 			fenetre.hpp 	widget.hpp	widgetBox/buttonRect.hpp	managerGUI.hpp	widgetBox/widgetBox.hpp	widgetBox/buttonCircle.hpp	$(ficH2)
+
+ficCpp2	= 	widgetBox/textArea.cpp	widgetBox/radioButton.cpp	listWidget.cpp	widgetBox/radioList.cpp	widgetBox/radioBox.cpp	dynamicWidget/dynamicWidget.cpp
+ficH2	=	widgetBox/textArea.hpp	widgetBox/radioButton.hpp	listWidget.hpp	widgetBox/radioList.hpp	widgetBox/radioBox.hpp	dynamicWidget/dynamicWidget.hpp
 
 default: reset main
 
@@ -21,34 +23,6 @@ reset:
 
 clear:
 	clear
-
-main: $(ficO)
-	g++ -g -Wall $(ficO) $(LSFML) -o main
-	rm -f *.gch
-
-buttonCircle.o: widgetBox/buttonCircle.cpp widgetBox/buttonCircle.hpp widget.hpp widgetBox/widgetBox.hpp
-	g++ -c -g -Wall widgetBox/buttonCircle.cpp widgetBox/buttonCircle.hpp widget.hpp widgetBox/widgetBox.hpp $(ISFML)
-
-buttonRect.o: widgetBox/buttonRect.cpp widgetBox/buttonRect.hpp widget.hpp widgetBox/widgetBox.hpp
-	g++ -c -g -Wall widgetBox/buttonRect.cpp widgetBox/buttonRect.hpp widget.hpp widgetBox/widgetBox.hpp $(ISFML)
-
-fenetre.o: fenetre.cpp fenetre.hpp
-	g++ -c -g -Wall fenetre.cpp fenetre.hpp $(ISFML)
-
-main.o: main.cpp fenetre.hpp
-	g++ -c -g -Wall main.cpp fenetre.hpp $(ISFML)
-
-managerGUI.o: managerGUI.cpp managerGUI.hpp widget.hpp
-	g++ -c -g -Wall managerGUI.cpp managerGUI.hpp widget.hpp $(ISFML)
-
-textArea.o: widgetBox/textArea.cpp widgetBox/textArea.hpp widgetBox/widgetBox.hpp widget.hpp
-	g++ -c -g -Wall widgetBox/textArea.cpp widgetBox/textArea.hpp widgetBox/widgetBox.hpp widget.hpp $(ISFML)
-
-widget.o: widget.cpp widget.hpp
-	g++ -c -g -Wall widget.cpp widget.hpp $(ISFML)
-
-widgetBox.o: widgetBox/widgetBox.cpp widgetBox/widgetBox.hpp widget.hpp
-	g++ -c -g -Wall widgetBox/widgetBox.cpp widgetBox/widgetBox.hpp widget.hpp $(ISFML)
 
 clean:
 	rm -fv *.gch widgetBox/*.gch dynamicWidget/*.gch *.o main 
@@ -72,5 +46,5 @@ tar_gz: clean
 	tar czvf ../Projet_cpp_Bazin-Lapegue-De_Jesus.tar.gz ../projet_cpp
 	rm -fr ../projet_cpp
 
-main2:
+main: clean clear
 	g++ -g -Wall $(ficCpp) $(ficH) $(ISFML) $(LSFML) -o main

@@ -18,6 +18,12 @@ class TextArea : public WidgetBox {
 		TextArea(sf::RenderWindow&);
 		~TextArea();
 		
+		void moveTextTop();
+		void moveTextBottom();
+		void moveTextLeft();
+		void moveTextRight();
+		void moveTextInCenter(bool on_X, bool on_Y);
+		
 		void eventNdraw(sf::Vector2i& posClic);
 		void drawText();
 		widgetBoxType getWidgetBoxType();

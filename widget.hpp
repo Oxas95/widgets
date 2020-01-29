@@ -7,8 +7,11 @@
 
 typedef enum{
 	box,
-	dynamic
+	dynamic,
+	radioList
 } widgetType;
+
+const char* parseString(widgetType);
 
 typedef enum{
 	Off = 0,
@@ -26,14 +29,6 @@ class Widget{
 		bool master;
 		
 	public :
-		sf::Vector2i position[2];
-		sf::Color background[2];
-		sf::Color borderColor[2];
-		
-		int borderSize[2];
-		
-		bool changeIfHover;
-		bool includeBorderInEvent;
 		
 		Widget(sf::RenderWindow&);
 		virtual ~Widget();

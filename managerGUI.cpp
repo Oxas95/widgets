@@ -1,91 +1,34 @@
 #include "managerGUI.hpp"
 
-ManagerGUI::ManagerGUI(sf::RenderWindow& _f) : f(_f) {
-	widgetList = NULL;
-	sizeList = 0;
+ManagerGUI::ManagerGUI(sf::RenderWindow& f) : ListWidget(f), lastClicPosition(-1,-2) {
+	isPressedKey = false;
+	eventKey = sf::Keyboard::Unknown;
 }
 
 ManagerGUI::~ManagerGUI() {
-	while(widgetList) delWidget();
-}
-
-//ajoute en début de liste un widget
-void ManagerGUI::addWidget(Widget* w) {
-	ManagerList* newWidget = new ManagerList();
-	newWidget->widget = w;
-	newWidget->next = widgetList;
-	widgetList = newWidget;
-	sizeList++;
-}
-
-//supprime le widget au début de la liste, la mémoire alloué au widget peut être libéré si voulu
-void ManagerGUI::delWidget() {
-	if(widgetList){
-		ManagerList* del = widgetList;
-		widgetList = widgetList->next;
-		delete del;
-		sizeList--;
-	}
-}
-
-ManagerList* delWidgetIDInList(ManagerList* ml, int ID){
-	if(!ml) return NULL;
-	else if(ml->widget->getID() == ID){
-		ManagerList* del = ml;
-		ml = ml->next;
-		delete del;
-		return ml;
-	}
-	else {
-		ml->next = delWidgetIDInList(ml->next, ID);
-		return ml;
-	}
-}
-
-void ManagerGUI::delWidgetID(int ID){
-	widgetList = delWidgetIDInList(widgetList, ID);
+	
 }
 
 void ManagerGUI::useWidgets(){
 	eventNdraw();
-	ManagerList* ml = widgetList;
+	Listwidget* ml = widgetList;
 	while(ml){
 		ml->widget->eventNdraw(lastClicPosition);
 		ml = ml->next;
 	}
 }
 
-int ManagerGUI::getSizeList(){
-	return sizeList;
-}
-
-Widget* ManagerGUI::getWidget(int i){
-	if(i < 0 || i >= sizeList) return NULL;
-	ManagerList* ml = widgetList;
-	for(int j = 0; j < i; j++) ml = ml->next;
-	return ml->widget;
-}
-
-Widget* ManagerGUI::getWidgetWithID(int ID){
-	ManagerList* ml = widgetList;
-	for(int j = 0; j < sizeList; j++) {
-		if(ml->widget->getID() != ID) ml = ml->next;
-		else j = sizeList;
-	}
-	return ml->widget;
-}
-
 //indique si un widget de la liste est maître
-bool otherIsMaster(ManagerList* ml){
+int otherIsMaster(Listwidget* ml){
 	if(ml){
-		if(ml->widget->isMaster()) return true;
+		if(ml->widget->isMaster()) return ml->widget->getID();
 		else return otherIsMaster(ml->next);
 	}
-	else return false;
+	else return -1;
 }
 
 void ManagerGUI::eventNdraw(){
-	if(!otherIsMaster(widgetList)) masterID = -1;
+	masterID = otherIsMaster(widgetList);
 	if(masterID == -1){
 		sf::Event event;
 		while (f.pollEvent(event)){
@@ -111,5 +54,8 @@ void ManagerGUI::eventNdraw(){
 			else eventKey = sf::Keyboard::Unknown;
 		}
 	}
-	masterID = -1;
+}
+
+int ManagerGUI::getMasterID(){
+	return masterID;
 }

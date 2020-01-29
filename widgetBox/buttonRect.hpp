@@ -7,7 +7,7 @@
 #include "widgetBox.hpp"
 
 class ButtonRect : public WidgetBox{
-	private :
+	protected :
 		sf::RectangleShape rectangle;
 		bool activated;
 		bool pushed;
@@ -16,19 +16,18 @@ class ButtonRect : public WidgetBox{
 		sf::Vector2i sizeButton[2];
 		bool stay_activated;
 		
-	public :
 		ButtonRect(sf::RenderWindow&);
-		~ButtonRect();
+		virtual ~ButtonRect();
 		void moveTextTop(widgetStatus usage);
 		void moveTextBottom(widgetStatus usage);
 		void moveTextLeft(widgetStatus usage);
 		void moveTextRight(widgetStatus usage);
 		void moveTextInCenter(widgetStatus usage, bool on_X, bool on_Y);
-		void eventNdraw(sf::Vector2i& posClic);
+		virtual void eventNdraw(sf::Vector2i& posClic);
 		bool isActivated();
 		bool isPushed();
 		
-		widgetBoxType getWidgetBoxType();
+		virtual widgetBoxType getWidgetBoxType();
 };
 
 #endif //button_hpp

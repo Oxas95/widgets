@@ -7,16 +7,15 @@
 #include "widgetBox.hpp"
 
 class ButtonCircle : public WidgetBox{
-	private :
+	protected :
 		sf::CircleShape circle;
 		bool activated;
 		bool pushed;
 		
 	public :
-		int sizeButton[2];
+		int sizeButton[2]; //this size is the radius of the button. to get the full size, calcul sizeButton[] * 2 + borderSize[] * 2
 		bool stay_activated;
 		
-	public :
 		ButtonCircle(sf::RenderWindow&);
 		~ButtonCircle();
 		void moveTextTop(widgetStatus usage);

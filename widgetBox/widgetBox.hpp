@@ -10,13 +10,21 @@ typedef enum{
 	undefined,
 	buttonRect,
 	buttonCircle,
-	textArea
+	textArea,
+	radioButton,
+	radioBox
 } widgetBoxType;
+
+const char* parseString(widgetBoxType);
 
 class WidgetBox : public Widget{
 	protected :
 		sf::Font font[2];
 		widgetBoxType boxType;
+		
+		
+		sf::Vector2i position[2];
+		int borderSize[2];
 		
 	public :
 		sf::Sprite* sprite[2]; //is set to public to customize the sprite, but can be loaded with loadImage(const char*)
@@ -24,7 +32,15 @@ class WidgetBox : public Widget{
 		
 		sf::Text text[2];
 		//array-var of size 2 : { status of widget }
-	
+		
+		
+		sf::Color background[2];
+		sf::Color borderColor[2];
+		
+		bool changeIfHover;
+		bool includeBorderInEvent;
+		
+		
 		WidgetBox(sf::RenderWindow&);
 		virtual ~WidgetBox();
 		//if sizeText = 0 the text will not be displayed
@@ -35,6 +51,12 @@ class WidgetBox : public Widget{
 		int getWidthText(widgetStatus);
 		int getHeightText(widgetStatus);
 		void loadImage(widgetStatus, const char* path); //set path to NULL to remove image
+		
+		
+		virtual sf::Vector2i getPosition(widgetStatus);
+		virtual void setPosition(widgetStatus, int x, int y);
+		virtual int getBorderSize(widgetStatus);
+		virtual void setBorderSize(widgetStatus, int);
 		
 		virtual void eventNdraw(sf::Vector2i& posClic) = 0;
 		widgetType getWidgetType();
