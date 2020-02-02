@@ -7,6 +7,7 @@ class ManagerGUI : public ListWidget {
 	protected :
 		int masterID;
 		void eventNdraw();
+		sf::RenderWindow& f;
 	
 	public :
 		sf::Vector2i lastClicPosition;

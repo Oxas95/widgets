@@ -1,8 +1,10 @@
 #include "managerGUI.hpp"
 
-ManagerGUI::ManagerGUI(sf::RenderWindow& f) : ListWidget(f), lastClicPosition(-1,-2) {
+ManagerGUI::ManagerGUI(sf::RenderWindow& _f) : ListWidget(), f(_f) {
 	isPressedKey = false;
 	eventKey = sf::Keyboard::Unknown;
+	lastClicPosition.x = -1;
+	lastClicPosition.y = -2;
 }
 
 ManagerGUI::~ManagerGUI() {

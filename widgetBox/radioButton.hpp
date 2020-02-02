@@ -24,11 +24,11 @@ class RadioButton : public WidgetBox{
 		
 		widgetBoxType getWidgetBoxType();
 		
-		void moveTextTop();
-		void moveTextBottom();
-		void moveTextLeft();
-		void moveTextRight();
-		void moveTextInCenter(bool on_X, bool on_Y);
+		void moveTextTop(widgetStatus);
+		void moveTextBottom(widgetStatus);
+		void moveTextLeft(widgetStatus);
+		void moveTextRight(widgetStatus);
+		void moveTextInCenter(widgetStatus, bool on_X, bool on_Y);
 		
 		bool isPushed();
 		
@@ -43,11 +43,11 @@ class RadioButton : public WidgetBox{
 		void setPosition(int x, int y);
 		sf::Vector2i getPosition();
 		
+		
 		//size can't be changed, this override for setter don't do nothing to lock value of borderSize
 		int getBorderSize(widgetStatus);
 		void setBorderSize(widgetStatus, int);
 		int getBorderSize();
-		void setBorderSize(int);
 		
 		//text[On] is not used
 

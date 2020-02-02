@@ -1,6 +1,6 @@
 #include "radioList.hpp"
 
-RadioList::RadioList(sf::RenderWindow& f) : Widget(f), ListWidget(f) {
+RadioList::RadioList(sf::RenderWindow& f) : Widget(f), ListWidget() {
 	activatedID = -1;
 	type = radioList;
 }

@@ -1,6 +1,6 @@
 #include "listWidget.hpp"
 
-ListWidget::ListWidget(sf::RenderWindow& _f) : f(_f) {
+ListWidget::ListWidget() {
 	widgetList = NULL;
 	sizeList = 0;
 }

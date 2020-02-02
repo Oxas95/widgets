@@ -127,14 +127,14 @@ void RadioBox::eventNdraw(sf::Vector2i& posClic){
 	}
 	
 	rectangle.setSize(sf::Vector2f(sizeButton.x * 1.f, sizeButton.y * 1.f));
-	rectangle.setPosition(sf::Vector2f(position[usage].x + borderSize[usage], position[usage].y + borderSize[usage]));
+	rectangle.setPosition(sf::Vector2f(position[Off].x + borderSize[usage], position[Off].y + borderSize[usage]));
 	rectangle.setFillColor(backgroundHoverColor);
 	rectangle.setOutlineColor(borderHoverColor);
 	rectangle.setOutlineThickness(borderSize[usage]);
 	
 	f.draw(rectangle);
 	if(sprite[usage]) f.draw(*sprite[usage]);
-	if(text[Off].getCharacterSize() > 0) f.draw(text[Off]);
+	if(text[usage].getCharacterSize() > 0) f.draw(text[usage]);
 }
 
 bool RadioBox::isPushed(){

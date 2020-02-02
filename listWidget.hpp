@@ -13,10 +13,9 @@ class ListWidget {
 	protected :
 		int sizeList;
 		Listwidget* widgetList;
-		sf::RenderWindow& f;
 	
 	public :
-		ListWidget(sf::RenderWindow&);
+		ListWidget();
 		virtual ~ListWidget();
 		
 		virtual void addWidget(Widget* w);

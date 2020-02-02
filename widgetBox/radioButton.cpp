@@ -1,15 +1,15 @@
 #include "radioButton.hpp"
+#include "radioBox.hpp"
 
 RadioButton::RadioButton(sf::RenderWindow& f) : WidgetBox(f) {
 	boxType = radioButton;
-	sizeButton = 0;
+	setRadius(0);
 	stay_activated = true;
 	activated = false;
 	pushed = false;
 	externCircle.setOutlineThickness(1);
 	externCircle.setFillColor(sf::Color::Transparent);
 	externBorderColor = sf::Color::Black;
-	borderSize[Off] = borderSize[On] = 0;
 	borderColor[Off] = borderColor[On] = sf::Color::Transparent;
 	background[Off] = sf::Color::Transparent;
 	background[On] = sf::Color::Blue;
@@ -31,14 +31,15 @@ void RadioButton::setRadius(int v){
 	externCircle.setRadius(v);
 	sizeButton = v * 2 / 3 - 1;
 	borderSize[Off] = borderSize[On] = v / 3 + ((v % 3 > 0)? 1 : 0 );
+	circle.setRadius(sizeButton);
 }
 
 void RadioButton::setPosition(widgetStatus w, int x, int y){
-	externCircle.setPosition(x,y);
 	position[Off].x = x;
 	position[On].x = x;
 	position[Off].y = y;
 	position[On].y = y;
+	externCircle.setPosition(x,y);
 }
 
 sf::Vector2i RadioButton::getPosition(widgetStatus w){
@@ -102,50 +103,48 @@ void RadioButton::eventNdraw(sf::Vector2i& posClic){
 	circle.setFillColor(backgroundHoverColor);
 	circle.setOutlineColor(borderHoverColor);
 	circle.setOutlineThickness(borderSize[usage]);
-	circle.setRadius(sizeButton);
-	circle.setPosition(sf::Vector2f(position[usage].x + borderSize[usage] + 1, position[usage].y + borderSize[usage] + 1));
+	circle.setPosition(sf::Vector2f(position[Off].x + borderSize[Off] + 1, position[Off].y + borderSize[Off] + 1));
 	externCircle.setOutlineColor(externBorderColor);
 	f.draw(circle);
 	f.draw(externCircle);
-	f.draw(text[Off]);
+	f.draw(text[usage]);
 }
 
-void RadioButton::moveTextTop(){
-	int y = getHeightText(Off);
-	int decalageY = text[Off].getCharacterSize() - y;
+void RadioButton::moveTextTop(widgetStatus usage){
+	int y = getHeightText(usage);
+	int decalageY = text[usage].getCharacterSize() - y;
 	
-	text[Off].setPosition(text[Off].getPosition().x , position[Off].y - decalageY + 1);
+	text[usage].setPosition(text[usage].getPosition().x , position[usage].y - decalageY + 1);
 }
 
-void RadioButton::moveTextBottom(){
-	int y = getHeightText(Off);
-	int decalageY = text[Off].getCharacterSize() - y;
+void RadioButton::moveTextBottom(widgetStatus usage){
+	int y = getHeightText(usage);
+	int decalageY = text[usage].getCharacterSize() - y;
 	
-	text[Off].setPosition(text[Off].getPosition().x , position[Off].y - decalageY + sizeButton * 2 + borderSize[Off] * 2 - y + 1);
+	text[usage].setPosition(text[usage].getPosition().x , position[usage].y - decalageY + sizeButton * 2 + borderSize[usage] * 2 - y + 1);
 }
 
-void RadioButton::moveTextLeft(){
-	moveTextInCenter(true,false);
-	text[Off].setPosition(position[Off].x, text[Off].getPosition().y);
+void RadioButton::moveTextLeft(widgetStatus usage){
+	text[usage].setPosition(position[usage].x, text[usage].getPosition().y);
 }
 
-void RadioButton::moveTextRight(){
-	int x = getWidthText(Off);
-	text[Off].setPosition(position[Off].x + sizeButton * 2 + borderSize[Off] * 2 - x - 1, text[Off].getPosition().y);
+void RadioButton::moveTextRight(widgetStatus usage){
+	int x = getWidthText(usage);
+	text[usage].setPosition(position[usage].x + sizeButton * 2 + borderSize[usage] * 2 - x - 1, text[usage].getPosition().y);
 }
 
-void RadioButton::moveTextInCenter(bool on_X, bool on_Y){
-	int x = getWidthText(Off);
-	int y = getHeightText(Off);
-	int decalageY = text[Off].getCharacterSize() - y;
+void RadioButton::moveTextInCenter(widgetStatus usage, bool on_X, bool on_Y){
+	int x = getWidthText(usage);
+	int y = getHeightText(usage);
+	int decalageY = text[usage].getCharacterSize() - y;
 	
-	if(on_X) x = position[Off].x + ((sizeButton + borderSize[Off] + 1) * 2 - x) / 2;
-	else x = text[Off].getPosition().x;
+	if(on_X) x = position[usage].x + ((sizeButton + borderSize[usage] + 1) * 2 - x) / 2;
+	else x = text[usage].getPosition().x;
 	
-	if(on_Y) y = (position[Off].y - decalageY) + ((sizeButton + borderSize[Off] + 1) * 2 - y) / 2;
-	else y = text[Off].getPosition().y ;
+	if(on_Y) y = (position[usage].y - decalageY) + ((sizeButton + borderSize[usage] + 1) * 2 - y) / 2;
+	else y = text[usage].getPosition().y ;
 	
-	text[Off].setPosition(x, y);
+	text[usage].setPosition(x, y);
 }
 
 widgetBoxType RadioButton::getWidgetBoxType(){
@@ -156,7 +155,6 @@ bool RadioButton::isPushed(){
 	return pushed;
 }
 
-int RadioButton::getBorderSize(widgetStatus w){ return borderSize[Off];}
+int RadioButton::getBorderSize(widgetStatus w){ return borderSize[Off]; }
 void RadioButton::setBorderSize(widgetStatus, int){}
-int RadioButton::getBorderSize(){ return getBorderSize(Off);}
-void RadioButton::setBorderSize(int){}
+int RadioButton::getBorderSize(){ return getBorderSize(Off); }

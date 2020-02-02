@@ -23,33 +23,37 @@ int main(){
 	v.changeIfHover = false;
 	v.setText(Off, "test", v.sizeButton.y - 15 , sf::Color::Black);
 	v.moveTextInCenter(Off,true,true);
+	v.text[On] = v.text[Off];
 	
 	RadioButton rb(f.getWindow());
 	rb.setPosition(10,10);
 	rb.setRadius(15);
 	rb.changeIfHover = true;
 	rb.setText(Off, "test du text 1", rb.getRadius() * 2 , sf::Color::Black);
-	rb.moveTextInCenter(false,true);
-	rb.moveTextLeft();
+	rb.moveTextInCenter(Off,false,true);
+	rb.moveTextLeft(Off);
 	rb.text[Off].setPosition(rb.text[Off].getPosition().x + rb.getRadius() * 3 + rb.getBorderSize() * 2, rb.text[Off].getPosition().y);
+	rb.text[On] = rb.text[Off];
 	
 	RadioButton rb2(f.getWindow());
 	rb2.setPosition(10, rb.getSize() + 20);
 	rb2.setRadius(15);
 	rb2.changeIfHover = true;
 	rb2.setText(Off, "test du text 2", rb.getRadius() * 2 , sf::Color::Black);
-	rb2.moveTextInCenter(false,true);
-	rb2.moveTextLeft();
+	rb2.moveTextInCenter(Off,false,true);
+	rb2.moveTextLeft(Off);
 	rb2.text[Off].setPosition(rb2.text[Off].getPosition().x + rb2.getRadius() * 3 + rb2.getBorderSize() * 2, rb2.text[Off].getPosition().y);
+	rb2.text[On] = rb2.text[Off];
 	
 	RadioButton rb3(f.getWindow());
 	rb3.setPosition(10,30 + rb.getSize() + rb2.getSize());
 	rb3.setRadius(15);
 	rb3.changeIfHover = true;
 	rb3.setText(Off, "test du text 3", rb.getRadius() * 2 , sf::Color::Black);
-	rb3.moveTextInCenter(false,true);
-	rb3.moveTextLeft();
+	rb3.moveTextInCenter(Off,false,true);
+	rb3.moveTextLeft(Off);
 	rb3.text[Off].setPosition(rb3.text[Off].getPosition().x + rb3.getRadius() * 3 + rb3.getBorderSize() * 2, rb3.text[Off].getPosition().y);
+	rb3.text[On] = rb3.text[Off];
 	
 	RadioList rl(f.getWindow());
 	rl.addWidget(&rb);
