@@ -5,8 +5,11 @@ RSFML = export LD_LIBRARY_PATH=/usr/local/lib &&
 ficCpp = main.cpp	fenetre.cpp		widget.cpp	widgetBox/buttonRect.cpp	managerGUI.cpp	widgetBox/widgetBox.cpp	widgetBox/buttonCircle.cpp	$(ficCpp2)
 ficH   = 			fenetre.hpp 	widget.hpp	widgetBox/buttonRect.hpp	managerGUI.hpp	widgetBox/widgetBox.hpp	widgetBox/buttonCircle.hpp	$(ficH2)
 
-ficCpp2	= 	widgetBox/textArea.cpp	widgetBox/radioButton.cpp	listWidget.cpp	widgetBox/radioList.cpp	widgetBox/radioBox.cpp	dynamicWidget/dynamicWidget.cpp
-ficH2	=	widgetBox/textArea.hpp	widgetBox/radioButton.hpp	listWidget.hpp	widgetBox/radioList.hpp	widgetBox/radioBox.hpp	dynamicWidget/dynamicWidget.hpp
+ficCpp2	= widgetBox/textArea.cpp	widgetBox/radioButton.cpp	listWidget.cpp	widgetBox/radioList.cpp	widgetBox/radioBox.cpp	dynamicWidget/dynamicWidget.cpp	$(ficCpp3)
+ficH2	= widgetBox/textArea.hpp	widgetBox/radioButton.hpp	listWidget.hpp	widgetBox/radioList.hpp	widgetBox/radioBox.hpp	dynamicWidget/dynamicWidget.hpp	$(ficH3)
+
+ficCpp3 = dynamicWidget/deplacableRect.cpp
+ficH3 = dynamicWidget/deplacableRect.hpp
 
 default: reset main
 

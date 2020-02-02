@@ -6,8 +6,8 @@
 #include <string>
 
 typedef enum{
-	box,
-	dynamic,
+	widgetBox,
+	dynamicWidget,
 	radioList
 } widgetType;
 
@@ -25,7 +25,6 @@ class Widget{
 	protected :
 		const int ID;
 		sf::RenderWindow& f;
-		widgetType type;
 		bool master;
 		
 	public :

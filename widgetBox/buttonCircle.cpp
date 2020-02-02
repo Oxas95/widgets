@@ -1,7 +1,6 @@
 #include "buttonCircle.hpp"
 
 ButtonCircle::ButtonCircle(sf::RenderWindow& f) : WidgetBox(f), circle() {
-	boxType = buttonCircle;
 	sizeButton[Off] = 0;
 	sizeButton[On] = 0;
 	stay_activated = true;
@@ -10,7 +9,7 @@ ButtonCircle::ButtonCircle(sf::RenderWindow& f) : WidgetBox(f), circle() {
 }
 
 ButtonCircle::~ButtonCircle() {
-	printf("button deleted\n");
+	printf("buttonCircle deleted\n");
 }
 
 void ButtonCircle::moveTextTop(widgetStatus usage){
@@ -116,5 +115,5 @@ bool ButtonCircle::isPushed(){
 }
 
 widgetBoxType ButtonCircle::getWidgetBoxType(){
-	return boxType;
+	return buttonCircle;
 }

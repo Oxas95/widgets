@@ -1,4 +1,6 @@
 #include "listWidget.hpp"
+#include <stdio.h>
+#include <stdlib.h>
 
 ListWidget::ListWidget() {
 	widgetList = NULL;
@@ -7,6 +9,7 @@ ListWidget::ListWidget() {
 
 ListWidget::~ListWidget(){
 	while(widgetList) delWidget();
+	printf("listWidget deleted\n");
 }
 
 //ajoute en début de liste un widget

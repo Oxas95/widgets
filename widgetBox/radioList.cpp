@@ -1,12 +1,13 @@
 #include "radioList.hpp"
+#include <stdio.h>
+#include <stdlib.h>
 
 RadioList::RadioList(sf::RenderWindow& f) : Widget(f), ListWidget() {
 	activatedID = -1;
-	type = radioList;
 }
 
 RadioList::~RadioList(){
-	
+	printf("radioList deleted\n");
 }
 
 void RadioList::addWidget(RadioButton* rb){
@@ -64,5 +65,5 @@ void RadioList::eventNdraw(sf::Vector2i& posClic){
 }
 
 widgetType RadioList::getWidgetType(){
-	return type;
+	return radioList;
 }

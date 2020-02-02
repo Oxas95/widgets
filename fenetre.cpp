@@ -42,6 +42,7 @@ void Fenetre::resize(const short zoom){
 Fenetre::~Fenetre(){
 	close();
 	delete window;
+	printf("window deleted\n");
 }
 
 void Fenetre::close(){

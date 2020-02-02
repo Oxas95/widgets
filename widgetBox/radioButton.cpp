@@ -2,7 +2,6 @@
 #include "radioBox.hpp"
 
 RadioButton::RadioButton(sf::RenderWindow& f) : WidgetBox(f) {
-	boxType = radioButton;
 	setRadius(0);
 	stay_activated = true;
 	activated = false;
@@ -16,7 +15,7 @@ RadioButton::RadioButton(sf::RenderWindow& f) : WidgetBox(f) {
 }
 
 RadioButton::~RadioButton(){
-	printf("Radio Button deleted\n");
+	printf("RadioButton deleted\n");
 }
 
 int RadioButton::getSize(){

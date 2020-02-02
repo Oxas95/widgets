@@ -20,8 +20,6 @@ const char* parseString(widgetBoxType);
 class WidgetBox : public Widget{
 	protected :
 		sf::Font font[2];
-		widgetBoxType boxType;
-		
 		
 		sf::Vector2i position[2];
 		int borderSize[2];

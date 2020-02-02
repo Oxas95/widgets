@@ -22,7 +22,6 @@ WidgetBox::WidgetBox(sf::RenderWindow& f) : Widget(f) {
 	sprite[On] = NULL;
 	setText(Off, "", 0, sf::Color::Black, position[Off], "ttf/F25_Bank_Printer.ttf");
 	setText(On, "", 0, sf::Color::Black, position[On], "ttf/F25_Bank_Printer.ttf");
-	type = box;
 	for (int i = 0; i < 2; i++){
 		borderColor[i] = sf::Color::Black;
 		borderSize[i] = 1;
@@ -110,5 +109,5 @@ void WidgetBox::setBorderSize(widgetStatus w, int i){
 }
 
 widgetType WidgetBox::getWidgetType() {
-	return type;
+	return widgetBox;
 }

@@ -1,4 +1,6 @@
 #include "managerGUI.hpp"
+#include <stdio.h>
+#include <stdlib.h>
 
 ManagerGUI::ManagerGUI(sf::RenderWindow& _f) : ListWidget(), f(_f) {
 	isPressedKey = false;
@@ -8,7 +10,7 @@ ManagerGUI::ManagerGUI(sf::RenderWindow& _f) : ListWidget(), f(_f) {
 }
 
 ManagerGUI::~ManagerGUI() {
-	
+	printf("managerGUI deleted\n");
 }
 
 void ManagerGUI::useWidgets(){

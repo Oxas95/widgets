@@ -1,5 +1,6 @@
 #include "textArea.hpp"
-#include <queue>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -8,7 +9,7 @@ TextArea::TextArea(sf::RenderWindow& f) : WidgetBox(f) {
 }
 
 TextArea::~TextArea(){
-	
+	printf("testArea deleted\n");
 }
 
 void TextArea::moveTextTop(){

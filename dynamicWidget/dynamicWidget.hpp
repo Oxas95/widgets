@@ -3,6 +3,13 @@
 
 #include "../widget.hpp"
 
+typedef enum {
+	deplacableRect,
+	deplacableCircle
+} dynamicWidgetType;
+
+const char* parseString(dynamicWidgetType);
+
 class DynamicWidget : public Widget {
 	
 	protected :
@@ -18,6 +25,10 @@ class DynamicWidget : public Widget {
 		
 		int getVal();
 		void setVal(int*);
+		
+		widgetType getWidgetType();
+		virtual dynamicWidgetType getDynamicWidgetType() = 0;
+		virtual void eventNdraw(sf::Vector2i& posClic) = 0;
 };
 
 #endif //dynamicWidget_hpp

@@ -8,9 +8,10 @@ const char* parseString(widgetType w){
 	string s;
 	
 	switch(w){
-		case box 		: 	s = "box";			break;
-		case dynamic 	: 	s = "dynamic";		break;
-		case radioList 	: 	s = "radioList";	break;
+		case widgetBox 		: 	s = "widgetBox";			break;
+		case dynamicWidget 	: 	s = "dynamicWidget";		break;
+		case radioList 		: 	s = "radioList";			break;
+		default				:	s = "undefined";			break;
 	}
 	return s.c_str();
 }
@@ -24,10 +25,6 @@ Widget::Widget(sf::RenderWindow& _f) : ID(nextID), f(_f) {
 
 Widget::~Widget() {
 	printf("widget deleted\n");
-}
-
-widgetType Widget::getWidgetType() {
-	return type;
 }
 
 int Widget::getID(){

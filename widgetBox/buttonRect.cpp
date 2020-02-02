@@ -1,7 +1,6 @@
 #include "buttonRect.hpp"
 
 ButtonRect::ButtonRect(sf::RenderWindow& f) : WidgetBox(f), rectangle(sf::Vector2f(0,0)) {
-	boxType = buttonRect;
 	sizeButton[Off].x = sizeButton[Off].y = 0;
 	sizeButton[On].x = sizeButton[On].y = 0;
 	stay_activated = true;
@@ -10,7 +9,7 @@ ButtonRect::ButtonRect(sf::RenderWindow& f) : WidgetBox(f), rectangle(sf::Vector
 }
 
 ButtonRect::~ButtonRect() {
-	printf("button deleted\n");
+	printf("buttonRect deleted\n");
 }
 
 void ButtonRect::moveTextTop(widgetStatus usage){
@@ -24,7 +23,7 @@ void ButtonRect::moveTextBottom(widgetStatus usage){
 	int y = getHeightText(usage);
 	int decalageY = text[usage].getCharacterSize() - y;
 	
-	text[usage].setPosition(text[usage].getPosition().x , position[usage].y - decalageY + sizeButton[usage].y + borderSize[usage] - y);
+	text[usage].setPosition(text[usage].getPosition().x , position[usage].y - decalageY + sizeButton[usage].y + borderSize[usage] * 2 - y);
 }
 
 void ButtonRect::moveTextLeft(widgetStatus usage){
@@ -33,7 +32,7 @@ void ButtonRect::moveTextLeft(widgetStatus usage){
 
 void ButtonRect::moveTextRight(widgetStatus usage){
 	int x = getWidthText(usage);
-	text[usage].setPosition(position[usage].x + sizeButton[usage].x + borderSize[usage] - x, text[usage].getPosition().y);
+	text[usage].setPosition(position[usage].x + sizeButton[usage].x + borderSize[usage] * 2 - x, text[usage].getPosition().y);
 }
 
 void ButtonRect::moveTextInCenter(widgetStatus usage, bool on_X, bool on_Y){
@@ -41,10 +40,10 @@ void ButtonRect::moveTextInCenter(widgetStatus usage, bool on_X, bool on_Y){
 	int y = getHeightText(usage);
 	int decalageY = text[usage].getCharacterSize() - y;
 	
-	if(on_X) x = position[usage].x + (sizeButton[usage].x + borderSize[usage] - x) / 2;
+	if(on_X) x = position[usage].x + (sizeButton[usage].x + borderSize[usage] * 2 - x) / 2;
 	else x = text[usage].getPosition().x;
 	
-	if(on_Y) y = (position[usage].y - decalageY) + (sizeButton[usage].y + borderSize[usage] - y) / 2;
+	if(on_Y) y = (position[usage].y - decalageY) + (sizeButton[usage].y + borderSize[usage] * 2 - y) / 2;
 	else y = text[usage].getPosition().y ;
 	
 	text[usage].setPosition(x, y);
@@ -57,8 +56,8 @@ void ButtonRect::eventNdraw(sf::Vector2i& posClic){
 	int size[2] = {sizeButton[usage].x,sizeButton[usage].y};
 	sf::Vector2i pos(position[usage].x + borderSize[usage],position[usage].y + borderSize[usage]);
 	if(includeBorderInEvent){
-		size[0] += borderSize[usage];
-		size[1] += borderSize[usage];
+		size[0] += borderSize[usage] * 2;
+		size[1] += borderSize[usage] * 2;
 		pos.x -= borderSize[usage];
 		pos.y -= borderSize[usage];
 	}
@@ -80,8 +79,8 @@ void ButtonRect::eventNdraw(sf::Vector2i& posClic){
 	pos.x = position[usage].x + borderSize[usage];
 	pos.y = position[usage].y + borderSize[usage];
 	if(includeBorderInEvent){
-		size[0] += borderSize[usage];
-		size[1] += borderSize[usage];
+		size[0] += borderSize[usage] * 2;
+		size[1] += borderSize[usage] * 2;
 		pos.x -= borderSize[usage];
 		pos.y -= borderSize[usage];
 	}
@@ -123,5 +122,5 @@ bool ButtonRect::isPushed(){
 }
 
 widgetBoxType ButtonRect::getWidgetBoxType(){
-	return boxType;
+	return buttonRect;
 }

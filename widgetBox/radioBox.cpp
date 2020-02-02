@@ -1,14 +1,15 @@
 #include "radioBox.hpp"
+#include <stdio.h>
+#include <stdlib.h>
 
 RadioBox::RadioBox(sf::RenderWindow& f) : WidgetBox(f), rectangle(sf::Vector2f(0,0)) {
-	boxType = radioBox;
 	borderSize[Off] = borderSize[On] = 1;
 	stay_activated = true;
 	includeBorderInEvent = false;
 }
 
 RadioBox::~RadioBox(){
-	
+	printf("radioBox deleted\n");
 }
 
 void RadioBox::setPosition(widgetStatus w, int x, int y){
@@ -31,7 +32,7 @@ sf::Vector2i RadioBox::getPosition(){
 }
 
 widgetBoxType RadioBox::getWidgetBoxType(){
-	return boxType;
+	return radioBox;
 }
 
 void RadioBox::setBorderSize(widgetStatus, int){}
@@ -47,7 +48,7 @@ void RadioBox::moveTextBottom(widgetStatus usage){
 	int y = getHeightText(usage);
 	int decalageY = text[usage].getCharacterSize() - y;
 	
-	text[usage].setPosition(text[usage].getPosition().x , position[usage].y - decalageY + sizeButton.y + borderSize[usage] - y);
+	text[usage].setPosition(text[usage].getPosition().x , position[usage].y - decalageY + sizeButton.y + borderSize[usage] * 2 - y);
 }
 
 void RadioBox::moveTextLeft(widgetStatus usage){
@@ -56,7 +57,7 @@ void RadioBox::moveTextLeft(widgetStatus usage){
 
 void RadioBox::moveTextRight(widgetStatus usage){
 	int x = getWidthText(usage);
-	text[usage].setPosition(position[usage].x + sizeButton.x + borderSize[usage] - x, text[usage].getPosition().y);
+	text[usage].setPosition(position[usage].x + sizeButton.x + borderSize[usage] * 2 - x, text[usage].getPosition().y);
 }
 
 void RadioBox::moveTextInCenter(widgetStatus usage, bool on_X, bool on_Y){
@@ -64,10 +65,10 @@ void RadioBox::moveTextInCenter(widgetStatus usage, bool on_X, bool on_Y){
 	int y = getHeightText(usage);
 	int decalageY = text[usage].getCharacterSize() - y;
 	
-	if(on_X) x = position[usage].x + (sizeButton.x + borderSize[usage] - x) / 2;
+	if(on_X) x = position[usage].x + (sizeButton.x + borderSize[usage] * 2 - x) / 2;
 	else x = text[usage].getPosition().x;
 	
-	if(on_Y) y = (position[usage].y - decalageY) + (sizeButton.y + borderSize[usage] - y) / 2;
+	if(on_Y) y = (position[usage].y - decalageY) + (sizeButton.y + borderSize[usage] * 2 - y) / 2;
 	else y = text[usage].getPosition().y ;
 	
 	text[usage].setPosition(x, y);
@@ -80,8 +81,8 @@ void RadioBox::eventNdraw(sf::Vector2i& posClic){
 	int size[2] = {sizeButton.x,sizeButton.y};
 	sf::Vector2i pos(position[usage].x + borderSize[usage],position[usage].y + borderSize[usage]);
 	if(includeBorderInEvent){
-		size[0] += borderSize[usage];
-		size[1] += borderSize[usage];
+		size[0] += borderSize[usage] * 2;
+		size[1] += borderSize[usage] * 2;
 		pos.x -= borderSize[usage];
 		pos.y -= borderSize[usage];
 	}
@@ -103,8 +104,8 @@ void RadioBox::eventNdraw(sf::Vector2i& posClic){
 	pos.x = position[usage].x + borderSize[usage];
 	pos.y = position[usage].y + borderSize[usage];
 	if(includeBorderInEvent){
-		size[0] += borderSize[usage];
-		size[1] += borderSize[usage];
+		size[0] += borderSize[usage] * 2;
+		size[1] += borderSize[usage] * 2;
 		pos.x -= borderSize[usage];
 		pos.y -= borderSize[usage];
 	}
