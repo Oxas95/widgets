@@ -4,6 +4,7 @@
 #include "../widget.hpp"
 
 typedef enum {
+	deplacable
 	deplacableRect,
 	deplacableCircle
 } dynamicWidgetType;

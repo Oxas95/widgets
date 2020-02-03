@@ -8,6 +8,7 @@ using namespace std;
 const char* parseString(dynamicWidgetType w){
 	string s;
 	switch(w){
+		case deplacable		 	: 	s = "deplacable"; 			break;
 		case deplacableRect 	: 	s = "deplacableRect"; 		break;
 		case deplacableCircle 	: 	s = "deplacableCircle";		break;
 		default 				: 	s = "undefined";			break;

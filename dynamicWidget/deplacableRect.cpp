@@ -1,14 +1,13 @@
 #include "deplacableRect.hpp"
-#include <iostream>
 
-DeplacableRect::DeplacableRect(sf::RenderWindow& f) : DynamicWidget(f) {
+DeplacableRect(sf::RenderWindow& f) : Deplacable(f) {
 	
 }
 
-DeplacableRect::~DeplacableRect(){
-	printf("deplacableRect deleted\n");
+~DeplacableRect(){
+	
 }
 
-dynamicWidgetType DeplacableRect::getDynamicWidgetType(){
-	return deplacableRect;
+dynamicWidgetType getDynamicWidgetType(){
+	
 }

@@ -8,8 +8,8 @@ ficH   = 			fenetre.hpp 	widget.hpp	widgetBox/buttonRect.hpp	managerGUI.hpp	widg
 ficCpp2	= widgetBox/textArea.cpp	widgetBox/radioButton.cpp	listWidget.cpp	widgetBox/radioList.cpp	widgetBox/radioBox.cpp	dynamicWidget/dynamicWidget.cpp	$(ficCpp3)
 ficH2	= widgetBox/textArea.hpp	widgetBox/radioButton.hpp	listWidget.hpp	widgetBox/radioList.hpp	widgetBox/radioBox.hpp	dynamicWidget/dynamicWidget.hpp	$(ficH3)
 
-ficCpp3 = dynamicWidget/deplacableRect.cpp
-ficH3 = dynamicWidget/deplacableRect.hpp
+ficCpp3 = dynamicWidget/deplacable.cpp
+ficH3 = dynamicWidget/deplacable.hpp
 
 default: reset main
 

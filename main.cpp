@@ -37,7 +37,7 @@ void text_button_test(){
 	
 	TextArea ta(f.getWindow());
 	
-	ta.setText(Off,"Bonjour\nje suis etudiant en fac\net je cherche un cahier perdu",20,sf::Color::Red,sf::Vector2i(20,150));
+	ta.setText(Off,"ligne 1\nligne 2\nligne 3",20,sf::Color::Red,sf::Vector2i(20,150));
 	
 	ManagerGUI mg(f.getWindow());
 	
@@ -56,7 +56,7 @@ void buttonRect_buttonCircle_test(){
 	b.setPosition(On, 20, 20);
 	b.sizeButton[Off].x = 100;	b.sizeButton[Off].y = 100;
 	b.sizeButton[On].x = 80;	b.sizeButton[On].y = 80;
-	b.setBorderSize(Off,10); b.setBorderSize(On,20);
+	b.setBorderSize(Off,10); b.setBorderSize(On,10);
 	b.background[Off] = sf::Color::White;
 	b.background[On] = sf::Color::White;
 	b.setText(Off,"X",50,sf::Color::Black);
